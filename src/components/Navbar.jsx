@@ -1,12 +1,12 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid max-width-container">
 
-                <span className="navbar-brand">ErgasiaPSPI</span>
+                <Link className="navbar-brand" to="/">ErgasiaPSPI</Link>
                 
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
