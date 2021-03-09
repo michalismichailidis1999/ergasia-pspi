@@ -34,19 +34,7 @@ body{
     width: 100% !important;
 }
 
-form h1{
-    color: #333 !important;
-}
 
-.my-form{
-    width: 50%;
-    margin: 0 auto;
-    height: calc(100vh - 120px);
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-top: 80px;
-}
 
 footer{
     height: 60px;
