@@ -1,0 +1,32 @@
+:root{
+    --main-color: #db8539;
+}
+
+body{
+    font-size: 20px !important;
+}
+
+.max-width-container{
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.navbar{
+    background: var(--main-color) !important;
+}
+
+.navbar-brand{
+    color: white !important;
+    font-size: 1.35rem;
+}
+
+.nav-link{
+    color: white !important;
+    font-size: 1.1rem;
+}
+
+.navbar-nav{
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+}
