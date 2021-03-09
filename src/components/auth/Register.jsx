@@ -1,10 +1,15 @@
 import React from 'react'
 
-const Login = () => {
+const Register = () => {
     return (
         <div className="my-form">
             <form>
-                <h1>Login</h1>
+                <h1>Register</h1>
+
+                <div className="mb-3">
+                    <label className="form-label">Username</label>
+                    <input type="text" className="form-control" />
+                </div>
 
                 <div className="mb-3">
                     <label className="form-label">Email address</label>
@@ -22,4 +27,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

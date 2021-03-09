@@ -4,6 +4,8 @@
 
 body{
     font-size: 20px !important;
+    height: 100vh !important;
+    width: 100vw !important;
 }
 
 .max-width-container{
@@ -13,6 +15,7 @@ body{
 
 .navbar{
     background: var(--main-color) !important;
+    height: 60px !important;
 }
 
 .navbar-brand{
@@ -29,4 +32,31 @@ body{
     display: flex !important;
     justify-content: flex-end !important;
     width: 100% !important;
+}
+
+form h1{
+    color: #333 !important;
+}
+
+.my-form{
+    width: 50%;
+    margin: 0 auto;
+    height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-top: 80px;
+}
+
+footer{
+    height: 60px;
+    box-sizing: border-box !important;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #333;
+}
+
+footer p{
+    margin: 0 !important;
 }
