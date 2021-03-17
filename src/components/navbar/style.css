@@ -1,0 +1,119 @@
+/* Navbar Styles */
+
+.navbar{
+    background: var(--main-color) !important;
+    height: 60px !important;
+}
+
+.navbar-brand{
+    color: white !important;
+    font-size: 1.45rem;
+}
+
+.nav-link{
+    color: white !important;
+    font-size: 1.1rem;
+}
+
+.navbar-nav{
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+}
+
+.hamburger, .responsive-nav{
+    display: none;
+}
+
+@media(max-width: 1525px){
+    nav{
+        padding: 0 30px;
+    }
+}
+
+@media(max-width: 992px){
+    .navbar{
+        position: relative !important;
+    }
+
+    .navbar-collapse{
+        display: none !important;
+    }
+
+    .responsive-nav{
+        display: block;
+    }
+
+    .hamburger{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .hamburger span{
+        display: inline-block;
+        width: 55%;
+        height: 2px;
+        background: white;
+        margin-bottom: 5px;
+        transition: transform 100ms ease-in;
+    }
+
+    .hamburger span:last-child{
+        margin-bottom: 0;
+    }
+
+    .hamburger.close-nav span{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .hamburger.close-nav span:first-child{
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .responsive-nav{
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        z-index: 1000 !important;
+    }
+
+    .responsive-nav li{
+        width: fit-content !important;
+        height: fit-content !important;
+        margin-bottom: 10px !important;
+        transform: translateX(100px);
+        margin-bottom: 0;
+    }
+
+    .responsive-nav li.show{
+        transform: translateX(0px);
+    }
+
+    .responsive-nav .nav-link{
+        background: var(--main-color);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+
+    .responsive-nav .nav-link:hover{
+        background: var(--main-color-lighter);
+    }
+}
+
+/* End of Navbar */

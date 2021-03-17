@@ -1,24 +1,41 @@
-import Navbar from './components/Navbar';
-import {Switch, Route} from 'react-router-dom'
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import Layout from './components/layout/Layout';
+import React, { useEffect } from 'react';
+import {ToastContainer} from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser } from './actions/userActions';
+import {useHistory} from 'react-router-dom'
+
+// Components
+import Navbar from './components/navbar/Navbar';
+import Routes from './components/routes/Routes';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const history = useHistory()
+
+  const {isAuthenticated} = useSelector(state => state.user)
+
+  useEffect(() => {
+    dispatch(loadUser())
+  }, [])
+
+  useEffect(() => {
+    if(isAuthenticated){
+      history.push("/dashboard");
+    }
+  }, [isAuthenticated])
+
   return (
-    <div>
+    <React.Fragment>
       <Navbar/>
 
-      <Switch>
-        <Route exact path="/" component={Layout}/>
-        <Route exact path="/login" component={Login}/>
-        <Route exact path="/register" component={Register}/>
-      </Switch>
+      <Routes/>
 
       <footer>
         <p>ErgasiaPSPI &copy; 2021</p>
       </footer>
-    </div>
+      
+      <ToastContainer position="bottom-right"/>
+    </React.Fragment>
   );
 }
 

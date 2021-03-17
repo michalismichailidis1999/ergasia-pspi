@@ -1,8 +1,5 @@
-form h1{
-    color: #333 !important;
-}
-
 .my-form{
+    height: calc(100vh - 120px);
     width: 50%;
     margin: 0 auto;
     display: flex;
@@ -16,11 +13,48 @@ form h1{
     width: 100% !important;
 }
 
+.my-form form h1{
+    color: #333 !important;
+}
 
-.form-error{
-    width: 100% !important;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    margin-bottom: 30px;
+.redirect-link{
+    text-decoration: none;
+    font-weight: lighter;
+}
+
+.redirect-link:hover{
+    text-decoration: underline;
+}
+
+.my-form form button{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-border{
+    height: 20px !important;
+    width: 20px !important;
+    border-width: 2px !important;
+    margin-left: 10px;
+}
+
+/* Media Queries */
+
+@media(max-width: 860px){
+    .my-form{
+        width: 70%;
+    }
+
+    .my-form form h1{
+        font-size: 1.8rem;
+    }
+    
+    .redirect-link{
+        font-size: 1.2rem;
+    }
+
+    .my-form form label{
+        font-size: 1.2rem;
+    }
 }

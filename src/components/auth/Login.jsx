@@ -1,21 +1,33 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import "./style.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/userActions';
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const {loading} = useSelector(state => state.form)
+    const {isAuthenticated} = useSelector(state => state.user)
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorOccured, setErrorOcccured] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(email, password)
+        dispatch(login(email, password));
     }
+
+    useEffect(() => {
+        if(isAuthenticated){
+            history.push("/dashboard")
+        }
+    }, [])
     
     return (
-        <div className="my-form layout">
-            {errorOccured && <div className="bg-danger form-error">Error occured</div>}
-
+        <div className="my-form">
             <form onSubmit={handleSubmit}>
                 <h1>Login</h1>
 
@@ -29,7 +41,17 @@ const Login = () => {
                     <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <div className="mb-3">
+                    <Link to="/register" className="redirect-link">Don't have an account?</Link>
+                </div>
+
+                <button 
+                    type="submit" 
+                    className="btn btn-primary" 
+                    disabled={email === "" || password === ""}
+                >
+                    Submit {loading && <div className="spinner-border"></div>}
+                </button>
             </form>
         </div>
     )

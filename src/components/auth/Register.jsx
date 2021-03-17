@@ -1,28 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import {Link, useHistory } from 'react-router-dom'
 import "./style.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../actions/userActions';
 
 const Register = () => {
-    const [username, setUsername] = useState("");
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const {loading} = useSelector(state => state.form)
+    const {isAuthenticated} = useSelector(state => state.user)
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorOccured, setErrorOcccured] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(username, email, password)
+        dispatch(register(firstName, lastName, email, password, confirmPassword))
     }
 
-    return (
-        <div className="my-form layout">
-            {errorOccured && <div className="bg-danger form-error">Error occured</div>}
+    useEffect(() => {
+        if(isAuthenticated){
+            history.push("/dashboard")
+        }
+    }, [])
 
+    return (
+        <div className="my-form">
             <form onSubmit={handleSubmit}>
                 <h1>Register</h1>
 
                 <div className="mb-3">
-                    <label className="form-label">Username</label>
-                    <input type="text" className="form-control" value={username} onChange={e => setUsername(e.target.value)} />
+                    <label className="form-label">First Name</label>
+                    <input type="text" className="form-control" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Last Name</label>
+                    <input type="text" className="form-control" value={lastName} onChange={e => setLastName(e.target.value)} />
                 </div>
 
                 <div className="mb-3">
@@ -35,7 +54,22 @@ const Register = () => {
                     <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input type="password" className="form-control" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+                </div>
+
+                <div className="mb-3">
+                    <Link to="/login" className="redirect-link">Already have an account?</Link>
+                </div>
+
+                <button 
+                    type="submit" 
+                    className="btn btn-primary" 
+                    disabled={firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === ""}
+                >
+                    Submit {loading && <div className="spinner-border"></div>}
+                </button>
             </form>
         </div>
     )
