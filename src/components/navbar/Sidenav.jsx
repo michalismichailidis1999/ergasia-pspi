@@ -1,42 +1,10 @@
 import React, {useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {NavLink} from 'react-router-dom'
-import { logOut } from '../../actions/userActions';
+import { authenticatedLinks, links } from './links';
 
 const Sidenav = () => {
-    const dispatch = useDispatch()
-
     const {isAuthenticated} = useSelector(state => state.user);
-
-    const links = [
-        {
-            id: "link-1",
-            to: "/register",
-            icon: "fas fa-user-plus",
-            action: null
-        },
-        {
-            id: "link-2",
-            to: "/login",
-            icon: "fas fa-user-check",
-            action: null
-        }
-    ]
-
-    const authenticatedLinks = [
-        {
-            id: "authenticated-link-1",
-            to: "/profile",
-            icon: "far fa-id-badge",
-            action: null
-        },
-        {
-            id: "authenticated-link-2",
-            to: "/",
-            icon: "fas fa-power-off",
-            action: () => dispatch(logOut())
-        }
-    ]
 
     const [showNav, setShowNav] = useState(false);
 
