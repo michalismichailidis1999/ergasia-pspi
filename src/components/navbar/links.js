@@ -5,28 +5,29 @@ export const links = [
     {
         id: "link-1",
         to: "/register",
-        icon: "fas fa-user-plus",
-        action: null
+        icon: "fas fa-user-plus"
     },
     {
         id: "link-2",
         to: "/login",
-        icon: "fas fa-user-check",
-        action: null
+        icon: "fas fa-user-check"
     }
 ]
 
 export const authenticatedLinks = [
     {
         id: "authenticated-link-1",
-        to: "/profile",
-        icon: "far fa-id-badge",
-        action: null
+        to: "/dashboard",
+        icon: "fas fa-home"
     },
     {
         id: "authenticated-link-2",
-        to: "/",
-        icon: "fas fa-power-off",
-        action: () => store.dispatch(logOut())
+        to: "/contact",
+        icon: "fas fa-envelope-open-text"
+    },
+    {
+        id: "authenticated-link-3",
+        to: "/profile",
+        icon: "fas fa-user"
     }
 ]

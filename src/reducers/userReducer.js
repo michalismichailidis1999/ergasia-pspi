@@ -1,12 +1,7 @@
 import { LOAD_USER, LOGIN, LOG_OUT, REGISTER } from "../actionTypes/userActionTypes";
 
 const initialState = {
-    user: {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        email: ""
-    },
+    user: null,
     isAuthenticated: false
 }
 

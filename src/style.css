@@ -4,6 +4,8 @@
 :root{
     --main-color: #3E5AA3;
     --main-color-lighter: #5778cc;
+    --red-color: #CA6969;
+    --red-color-lighter: #e47373;
 }
 
 /* Global Styles */

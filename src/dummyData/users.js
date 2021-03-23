@@ -4,14 +4,16 @@ const users = [
         firstName: "John",
         lastName: "Doe",
         email: "john@gmail.com",
-        password: "123456"
+        password: "123456",
+        photoURL: "/assets/images/user.png"
     },
     {
-        id: 1,
+        id: 2,
         firstName: "Jane",
         lastName: "Doe",
         email: "jane@gmail.com",
-        password: "123456"
+        password: "123456",
+        photoURL: "/assets/images/user.png"
     }
 ]
 

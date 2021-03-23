@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useSelector } from 'react-redux';
-import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { authenticatedLinks, links } from './links';
 
 const Sidenav = () => {
@@ -24,13 +24,13 @@ const Sidenav = () => {
                             style={{transition: `transform ${250 + i * 100}ms ease-in`}} 
                             className={showNav ? "nav-item show" : "nav-item"}
                         >
-                            <NavLink 
+                            <Link 
                                 className="nav-link" 
                                 to={link.to}
                                 onClick={() => setShowNav(false)}
                             >
                                 <i className={link.icon}></i>
-                            </NavLink>
+                            </Link>
                         </li>
                 )}
 
@@ -41,19 +41,13 @@ const Sidenav = () => {
                             style={{transition: `transform ${250 + i * 100}ms ease-in`}} 
                             className={showNav ? "nav-item show" : "nav-item"}
                         >
-                            <NavLink 
+                            <Link 
                                 className="nav-link" 
                                 to={link.to}
-                                onClick={() => {
-                                    if(link.action){
-                                        link.action();
-                                    }
-                                    
-                                    setShowNav(false)
-                                }}
+                                onClick={() => setShowNav(false)}
                             >
                                 <i className={link.icon}></i>
-                            </NavLink>
+                            </Link>
                         </li>
                 )}
             </ul>

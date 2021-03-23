@@ -1,42 +1,75 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
+import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 import Sidenav from './Sidenav'
 import "./style.css"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedLinks, links } from './links';
+import { logOut } from '../../actions/userActions';
 
 const Navbar = () => {
-    const {isAuthenticated} = useSelector(state => state.user);
+
+    const dispatch = useDispatch()
+    const {isAuthenticated, user} = useSelector(state => state.user);
+
+    const [showDropmenu, setShowDropmenu] = useState(false);
 
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid max-width-container">
 
-                <NavLink className="navbar-brand" to="/">ErgasiaPSPI</NavLink>
+                <Link className="navbar-brand" to="/">ErgasiaPSPI</Link>
                 
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {!isAuthenticated && links.map(
                             link => <li key={link.id} className="nav-item">
-                                <NavLink className="nav-link" to={link.to}>
+                                <Link className="nav-link" to={link.to}>
                                     {link.to.charAt(1).toUpperCase() + link.to.slice(2)}
-                                </NavLink>
+                                </Link>
                             </li>
                         )}
 
                         {isAuthenticated && authenticatedLinks.map(
-                            link => <li key={link.id} className="nav-item">
-                                <NavLink 
-                                    className="nav-link" 
-                                    to={link.to}
-                                    onClick={() => {
-                                        if(link.action){
-                                            link.action();
-                                        }
-                                    }}
-                                >
-                                    {link.to !== "/" ? link.to.charAt(1).toUpperCase() + link.to.slice(2) : "Log Out"}
-                                </NavLink>
+                            link => <li key={link.id} className={ link.to !== "profile" ? "nav-item" : "nav-item dropmenu"}>
+                                {
+                                    link.to !== "/profile" && 
+                                        <Link 
+                                            className="nav-link" 
+                                            to={link.to}
+                                        >
+                                            {link.to !== "/" ? link.to.charAt(1).toUpperCase() + link.to.slice(2) : "Home"}
+                                        </Link>
+                                }
+
+                                {
+                                    link.to === "/profile" && 
+                                    <React.Fragment>
+                                        <span className="dropdown-toggle" onClick={() => setShowDropmenu(!showDropmenu)}>
+                                            <img src={user.photoURL} alt="User"/> <span>{user.firstName + " " + user.lastName}</span>
+                                        </span>
+
+                                        <ul className={showDropmenu ? "dropdown-menu show" : "dropdown-menu"}>
+                                            <li>
+                                                <Link to="/profile?view-my-courses" className="dropdown-item" onClick={() => setShowDropmenu(false)}>
+                                                    My Courses <i className="fas fa-book"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/profile?view-account" className="dropdown-item" onClick={() => setShowDropmenu(false)}>
+                                                    Profile <i className="fas fa-user"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/" className="dropdown-item" onClick={() => {
+                                                    setShowDropmenu(false)
+                                                    dispatch(logOut())
+                                                }}>
+                                                    Log out <i className="fas fa-power-off"></i>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </React.Fragment>
+                                }
                             </li>
                         )}
                     </ul>

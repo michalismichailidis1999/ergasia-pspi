@@ -26,10 +26,17 @@ export const register = (firstName, lastName, email, password, confirmPassword) 
                             firstName,
                             lastName,
                             email,
-                            password
+                            password,
+                            photoURL: "/assets/images/user.png"
                         }
     
-                        localStorage.setItem("user", JSON.stringify(newUser));
+                        localStorage.setItem("user", JSON.stringify({
+                            id: newUser.id,
+                            firstName: newUser.firstName,
+                            lastName: newUser.lastName,
+                            email: newUser.email,
+                            photoURL: newUser.photoURL
+                        }));
                         dispatch({type: REGISTER, payload: newUser})
                         dispatch(userCreated(newUser))
                     }
@@ -54,7 +61,13 @@ export const login = (email, password) => {
                 const user = users.find(user => user.email === email && user.password === password)
     
                 if(user){
-                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("user", JSON.stringify({
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        photoURL: user.photoURL
+                    }));
                     dispatch({type: LOGIN, payload: user})
                 }else{
                     toast.error("Email or password is incorrect!")
