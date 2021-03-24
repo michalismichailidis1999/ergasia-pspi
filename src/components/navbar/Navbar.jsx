@@ -17,7 +17,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid max-width-container">
 
-                <Link className="navbar-brand" to="/">ErgasiaPSPI</Link>
+                <Link className="navbar-brand" to={isAuthenticated ? "/dashboard" : "/"}>ErgasiaPSPI</Link>
                 
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -37,7 +37,7 @@ const Navbar = () => {
                                             className="nav-link" 
                                             to={link.to}
                                         >
-                                            {link.to !== "/" ? link.to.charAt(1).toUpperCase() + link.to.slice(2) : "Home"}
+                                            {link.to !== "/dashboard" ? link.to.charAt(1).toUpperCase() + link.to.slice(2) : "Home"}
                                         </Link>
                                 }
 
