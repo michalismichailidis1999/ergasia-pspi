@@ -36,27 +36,57 @@ const Register = () => {
 
                 <div className="mb-3">
                     <label className="form-label">First Name</label>
-                    <input type="text" className="form-control" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Enter your first name..."
+                        value={firstName} 
+                        onChange={e => setFirstName(e.target.value)} 
+                    />
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label">Last Name</label>
-                    <input type="text" className="form-control" value={lastName} onChange={e => setLastName(e.target.value)} />
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        placeholder="Enter your last name..."
+                        value={lastName} 
+                        onChange={e => setLastName(e.target.value)} 
+                    />
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label">Email address</label>
-                    <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} />
+                    <input 
+                        type="email" 
+                        className="form-control"
+                        placeholder="Enter your email..."
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                    />
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label">Password</label>
-                    <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <input 
+                        type="password" 
+                        className="form-control"
+                        placeholder="Enter your password..."
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)}
+                    />
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Password</label>
-                    <input type="password" className="form-control" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+                    <label className="form-label">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        className="form-control"
+                        placeholder="Confirm your password..."
+                        value={confirmPassword} 
+                        onChange={e => setConfirmPassword(e.target.value)}
+                    />
                 </div>
 
                 <div className="mb-3">

@@ -33,12 +33,24 @@ const Login = () => {
 
                 <div className="mb-3">
                     <label className="form-label">Email address</label>
-                    <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} />
+                    <input 
+                        type="email" 
+                        className="form-control"
+                        placeholder="Enter your email..."
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                    />
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label">Password</label>
-                    <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <input 
+                        type="password" 
+                        className="form-control"
+                        placeholder="Enter your password..."
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)}
+                    />
                 </div>
 
                 <div className="mb-3">

@@ -24,7 +24,7 @@ const Navbar = () => {
                         {!isAuthenticated && links.map(
                             link => <li key={link.id} className="nav-item">
                                 <Link className="nav-link" to={link.to}>
-                                    {link.to.charAt(1).toUpperCase() + link.to.slice(2)}
+                                    {link.to !== "/" ? link.to.charAt(1).toUpperCase() + link.to.slice(2) : "Home"}
                                 </Link>
                             </li>
                         )}

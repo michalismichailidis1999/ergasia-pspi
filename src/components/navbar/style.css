@@ -30,7 +30,7 @@
     display: flex !important;
     justify-content: center;
     align-items: center;
-    font-weight: lighter;
+    font-weight: 300;
 }
 
 .nav-item .dropdown-toggle{

@@ -17,9 +17,18 @@
     color: #333 !important;
 }
 
+.my-form form label{
+    font-weight: 300 !important;
+}
+
+.my-form form input::placeholder{
+    color: #ccc !important;
+    font-weight: 300;
+}
+
 .redirect-link{
     text-decoration: none;
-    font-weight: lighter;
+    font-weight: 300;
 }
 
 .redirect-link:hover{
