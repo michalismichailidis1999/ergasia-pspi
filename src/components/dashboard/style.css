@@ -7,6 +7,7 @@
     align-items: center;
     margin-bottom: 30px;
     position: relative;
+    z-index: 1;
 }
 
 .search-form input{
@@ -17,6 +18,7 @@
     outline: none;
     padding: 10px 15px;
     font-weight: lighter;
+    z-index: 1;
 }
 
 .search-form input::placeholder{
@@ -39,9 +41,18 @@
     background: var(--main-color-lighter);
 }
 
+.search-form button.disabled{
+    background: var(--main-color-lower-alpha);
+}
+
+.search-form button.disabled:hover{
+    cursor: default;
+    background: var(--main-color-lower-alpha);
+}
+
 .matching{
     position: absolute;
-    top: 70px;
+    top: 65px;
     left: 0;
     width: 85%;
     height: fit-content;
@@ -155,6 +166,10 @@
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
     }
+
+    .matching{
+        font-size: 1.1rem;
+    }
 }
 
 @media(max-width: 815px){
@@ -190,6 +205,10 @@
         font-size: .95rem;
         padding: 5px 15px;
     }
+
+    .matching{
+        top: 60px
+    }
 }
 
 @media(max-width: 600px){
@@ -201,6 +220,11 @@
 
     .search-form input{
         width: 70%;
+    }
+
+    .matching{
+        width: 70%;
+        font-size: .9rem;
     }
 
     .search-form button{
@@ -242,6 +266,11 @@
         width: 100%;
         padding-left:25px;
         padding-right:25px;
+    }
+
+    .matching{
+        width: calc(70% - 35px);
+        left: 25px;
     }
 
     .filters{

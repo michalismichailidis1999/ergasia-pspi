@@ -4,6 +4,7 @@
 :root{
     --main-color: #3E5AA3;
     --main-color-lighter: #5778cc;
+    --main-color-lower-alpha: rgba(87, 120, 204, 0.8);
     --red-color: #CA6969;
     --red-color-lighter: #e47373;
 }

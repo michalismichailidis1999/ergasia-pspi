@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchCourse } from '../../actions/courseActions';
 
@@ -27,7 +27,7 @@ const SearchCourse = () => {
                 if(match){
                     currentMatches.push(match)
                 }
-            } 
+            }
         }
 
         setMatches(currentMatches);
@@ -39,31 +39,44 @@ const SearchCourse = () => {
         dispatch(searchCourse(title))
     }
 
+    useEffect(() => {
+        const clickEvent = window.addEventListener("click", e => {
+            let matchingListClicked = e.target.closest(".matching");
+
+            if(!matchingListClicked){
+                setShowMatches(false)
+                setMatches([])
+            }
+        })
+
+        return () => {
+            window.removeEventListener("click", clickEvent)
+        }
+    }, [])
+
     return (
         <form className="search-form" onSubmit={handleSubmit}>
             <input 
                 type="text" 
                 placeholder="Search Course..." 
                 value={title} 
-                onBlur={() => setShowMatches(false)}
                 onChange={handleChange}
             />
-            <button type="submit">Search</button>
+            
+            <button type="submit" disabled={title === ""} className={title === "" ? "disabled" : ""}>Search</button>
 
             {matches.length > 0 && showMatches &&
                 <ul className="matching">
                     {matches.map((match, i) => (
-                        <li 
-                            className="match" 
+                        <li
                             key={i}
-                            onClick={
-                                () => {
-                                    setTitle(
-                                        match[0].slice(match['index'], match[0].length - 1) + match['input'].slice(match[0].length - 1)
-                                    )
-                                    setShowMatches(false);
-                                }
-                            }
+                            onClick={() => {
+                                setTitle(
+                                    match[0].slice(match['index'], match[0].length - 1) + match['input'].slice(match[0].length - 1)
+                                )
+                                
+                                setShowMatches(false);
+                            }}
                         >
                             <span className="match">{match[0].slice(match['index'], match[0].length - 1)}</span>{match['input'].slice(match[0].length - 1)}
                         </li>

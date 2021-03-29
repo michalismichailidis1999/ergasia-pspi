@@ -4,7 +4,7 @@ import {ENROLL_TO_COURSE, FILTER_COURSES, SEARCH_COURSE, UNENROLL_FROM_COURSE} f
 const initialState = {
     courses,
     enrolledCourses: [],
-    allCourses: courses
+    allCourses: courses,
 }
 
 const courseReducer = (state=initialState, action) => {
@@ -21,7 +21,8 @@ const courseReducer = (state=initialState, action) => {
         case FILTER_COURSES:
             return {...state, courses: payload}
         case SEARCH_COURSE:
-            return {...state, courses: [state.allCourses.find(course => course.title === payload)]}
+            let course = state.allCourses.find(course => course.title === payload)
+            return {...state, courses: course ? [course] : []}
         default:
             return state;
     }
