@@ -39,19 +39,21 @@ const SearchCourse = () => {
         dispatch(searchCourse(title))
     }
 
-    useEffect(() => {
-        const clickEvent = window.addEventListener("click", e => {
-            let matchingListClicked = e.target.closest(".matching");
+    const handleClick = e => {
+        let matchingListClicked = e.target.closest(".matching");
 
             if(!matchingListClicked){
                 setShowMatches(false)
                 setMatches([])
             }
-        })
+    }
 
-        return () => {
-            window.removeEventListener("click", clickEvent)
-        }
+    useEffect(() => {
+        window.addEventListener("click", handleClick)
+
+        return () => 
+            window.removeEventListener("click", handleClick)
+        
     }, [])
 
     return (
