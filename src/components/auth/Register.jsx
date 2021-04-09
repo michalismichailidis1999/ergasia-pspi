@@ -27,7 +27,7 @@ const Register = () => {
         if(isAuthenticated){
             history.push("/dashboard")
         }
-    }, [])
+    }, [isAuthenticated])
 
     return (
         <div className="my-form">

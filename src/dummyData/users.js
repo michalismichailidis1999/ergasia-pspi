@@ -5,7 +5,8 @@ const users = [
         lastName: "Doe",
         email: "john@gmail.com",
         password: "123456",
-        photoURL: "/assets/images/user.png"
+        photoURL: "/assets/images/user.png",
+        role: "teacher"
     },
     {
         id: 2,
@@ -13,7 +14,17 @@ const users = [
         lastName: "Doe",
         email: "jane@gmail.com",
         password: "123456",
-        photoURL: "/assets/images/user.png"
+        photoURL: "/assets/images/user.png",
+        role: "student"
+    },
+    {
+        id: 3,
+        firstName: "Test",
+        lastName: "Admin",
+        email: "testadmin@gmail.com",
+        password: "123456",
+        photoURL: "/assets/images/user.png",
+        role: "admin"
     }
 ]
 

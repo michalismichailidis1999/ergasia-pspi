@@ -41,13 +41,6 @@
     align-items: center;
 }
 
-.spinner-border{
-    height: 20px !important;
-    width: 20px !important;
-    border-width: 2px !important;
-    margin-left: 10px;
-}
-
 /* Media Queries */
 
 @media(max-width: 860px){

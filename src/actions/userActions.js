@@ -27,7 +27,8 @@ export const register = (firstName, lastName, email, password, confirmPassword) 
                             lastName,
                             email,
                             password,
-                            photoURL: "/assets/images/user.png"
+                            photoURL: "/assets/images/user.png",
+                            role: "student"
                         }
     
                         localStorage.setItem("user", JSON.stringify({
@@ -35,7 +36,8 @@ export const register = (firstName, lastName, email, password, confirmPassword) 
                             firstName: newUser.firstName,
                             lastName: newUser.lastName,
                             email: newUser.email,
-                            photoURL: newUser.photoURL
+                            photoURL: newUser.photoURL,
+                            role: "student"
                         }));
                         dispatch({type: REGISTER, payload: newUser})
                         dispatch(userCreated(newUser))
@@ -50,7 +52,7 @@ export const register = (firstName, lastName, email, password, confirmPassword) 
     }
 }
 
-export const login = (email, password) => {
+export const login = (email, password, adminLogin=false) => {
     return async (dispatch) => {
         const users = store.getState().dummyData.users
 
@@ -61,12 +63,21 @@ export const login = (email, password) => {
                 const user = users.find(user => user.email === email && user.password === password)
     
                 if(user){
+                    if(adminLogin){
+                        if(user.role !== "admin"){
+                            toast.error("Email or password is incorrect!")
+                            dispatch(loadingCompleted());
+                            return;
+                        }
+                    }
+
                     localStorage.setItem("user", JSON.stringify({
                         id: user.id,
                         firstName: user.firstName,
                         lastName: user.lastName,
                         email: user.email,
-                        photoURL: user.photoURL
+                        photoURL: user.photoURL,
+                        role: user.role
                     }));
                     dispatch({type: LOGIN, payload: user})
                 }else{

@@ -5,6 +5,15 @@ const initialState = {
     courses,
     enrolledCourses: [],
     allCourses: courses,
+    tableData: courses.map(course => {
+        return {
+            id: course.id,
+            title: course.title,
+            category: course.category,
+            enrolls: course.enrolls,
+            rating: course.rating
+        }
+    })
 }
 
 const courseReducer = (state=initialState, action) => {

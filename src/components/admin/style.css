@@ -1,0 +1,205 @@
+/* Dashboard */
+
+.admin-dashboard{
+    width: calc(100vw - 250px);
+    margin-left: 250px;
+    font-family: "Nunito", sans-serif;
+    padding-top: 30px;
+}
+
+.admin-container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* End of Dashboard */
+
+/* Sidenav */
+
+.sidenav{
+    background: var(--main-color);
+    color: white;
+    height: 100vh;
+    width: 250px;
+    padding: 20px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sidenav div.navbar-brand{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid white;
+    padding-bottom: 5px;
+    margin: 0;
+    padding-top: 0;
+}
+
+.sidenav div.navbar-brand span{
+    cursor: pointer;
+}
+
+.sidenav ul{
+    padding: 10px;
+    margin: 0;
+    height: calc(100vh - 90px);
+    box-sizing: border-box;
+    margin-top: 20px;
+    position: relative;
+}
+
+.sidenav ul li{
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: all 150ms ease-in;
+}
+
+.sidenav ul li:hover{
+    cursor: pointer;
+    background: var(--main-color-lighter);
+}
+
+.sidenav ul li i{
+    margin-right: 10px;
+}
+
+.sidenav ul li.selected{
+    background: white;
+    color: var(--main-color);
+}
+
+.sidenav ul li:last-child{
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 20px;
+}
+
+/* End of sidenav */
+
+/* Layout */
+
+.admin-dashboard h1{
+    color: #333;
+    font-weight: 400;
+    margin-bottom: 50px;
+}
+
+.admin-container .boxes{
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+}
+
+.admin-container .boxes .box{
+    background: var(--main-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.admin-container .boxes .box .icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.4rem;
+    margin-bottom: 10px;
+}
+
+.admin-container .boxes .box span{
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.charts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.chart{
+    width: 100%;
+}
+
+.chart:last-child{
+    margin-top: 30px;
+}
+
+/* End of Layout */
+
+/* Selected Styles */
+
+table tbody tr td i{
+    cursor: pointer;
+}
+
+form{
+    margin-top: 30px;
+}
+
+form button.btn-secondary{
+    margin-left: 20px !important;
+}
+
+.create-icon{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    font-size: 1.4rem;
+    margin: 0 auto;
+    margin-top: 30px;
+    transition: background-color 150ms;
+}
+
+.create-icon:hover{
+    cursor: pointer;
+    background: var(--main-color-lighter);
+}
+
+.delete-button-box{
+    margin-top: 20px;
+}
+
+/* End of selected */
+
+/* Admin Login */
+
+.admin-login{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(103.15deg, #3E5AA3 0%, #5D73AC 35.76%, #4791B1 64.92%, #735FC6 100%);
+}
+
+.admin-login form{
+    background: white;
+    color: #333 !important;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 9px 3px rgba(0, 0, 0, 0.25);
+}
+
+.admin-login .link{
+    text-decoration: none;
+    color: #333;
+    margin-top: 30px;
+}
+
+/* End of admin login */

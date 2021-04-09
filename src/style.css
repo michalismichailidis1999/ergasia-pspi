@@ -33,6 +33,13 @@ ul{
     font-family: 'Nunito', sans-serif !important;
 }
 
+.spinner-border{
+    height: 20px !important;
+    width: 20px !important;
+    border-width: 2px !important;
+    margin-left: 10px;
+}
+
 /* End of Global */
 
 /* Footer Styles */

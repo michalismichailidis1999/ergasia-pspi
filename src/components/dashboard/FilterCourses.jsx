@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { filterCourses } from '../../actions/courseActions';
+import categories from '../../dummyData/categories';
 
 const FilterCourses = () => {
     const dispatch = useDispatch();
@@ -14,7 +15,6 @@ const FilterCourses = () => {
         setCategory(e.target.value);
 
         let filteredCourses = courses;
-        console.log(filteredCourses)
 
         if(currentCategory !== "All"){
             filteredCourses = filteredCourses.filter(course => course.category === currentCategory);
@@ -78,14 +78,11 @@ const FilterCourses = () => {
             <div className="filter-box">
                 <label>Category:</label>
 
-                <select className="form-select" onChange={handleCategoryChange} defaultValue={category}>
+                <select className="form-select" onChange={handleCategoryChange} value={category}>
                     <option value="All">All</option>
-                    <option value="Maths">Maths</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Foreign Languages">Foreign Languages</option>
-                    <option value="History">History</option>
+                    {categories.map((category, i) => (
+                        <option key={i + (Date.now() * Math.random() + "")} value={category.title} >{category.title}</option>
+                    ))}
                 </select>
             </div>
         </div>

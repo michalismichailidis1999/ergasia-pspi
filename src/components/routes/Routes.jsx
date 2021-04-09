@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Switch, Route} from 'react-router-dom'
 
 // Components
@@ -9,8 +9,20 @@ import Dashboard from '../dashboard/Dashboard';
 import Profile from '../profile/Profile';
 import Layout from '../layout/Layout';
 import PrivateRoute from './PrivateRoute'
+import AdminRoute from './AdminRoute'
+import AdminDashboard from '../admin/Dashboard'
+import AdminLogin from '../admin/Login'
+import { useSelector } from 'react-redux';
 
 const Routes = () => {
+    const {user} = useSelector(state => state.user)
+
+    useEffect(() => {
+        if(user){
+            console.log(user.role)
+        }
+    }, [user])
+
     return (
         <Switch>
             <Route exact path="/" component={Layout}/>
@@ -19,6 +31,8 @@ const Routes = () => {
             <Route exact path="/contact" component={Contact}/>
             <PrivateRoute exact path="/dashboard" component={Dashboard}/>
             <PrivateRoute exact path="/profile" component={Profile}/>
+            <AdminRoute exact path="/admin" component={AdminDashboard}/>
+            <Route exact path="/admin/login" component={AdminLogin} />
         </Switch>
     )
 }
