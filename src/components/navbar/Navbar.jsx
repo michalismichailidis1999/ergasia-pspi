@@ -54,11 +54,26 @@ const Navbar = () => {
                                                     My Courses <i className="fas fa-book"></i>
                                                 </Link>
                                             </li>
+
                                             <li>
                                                 <Link to="/profile?view-account" className="dropdown-item" onClick={() => setShowDropmenu(false)}>
                                                     Profile <i className="fas fa-user"></i>
                                                 </Link>
                                             </li>
+
+                                            {
+                                                user.role === "admin" && 
+                                                <li>
+                                                    <Link 
+                                                        to="/admin" 
+                                                        className="dropdown-item" 
+                                                        onClick={() => setShowDropmenu(false)}
+                                                    >
+                                                        Admin <i className="fas fa-user-shield"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            
                                             <li>
                                                 <Link to="/" className="dropdown-item" onClick={() => {
                                                     setShowDropmenu(false)

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import { authenticatedLinks, links } from './links';
 
 const Sidenav = () => {
-    const {isAuthenticated} = useSelector(state => state.user);
+    const {isAuthenticated, user} = useSelector(state => state.user);
 
     const [showNav, setShowNav] = useState(false);
 
@@ -50,6 +50,22 @@ const Sidenav = () => {
                             </Link>
                         </li>
                 )}
+
+                {
+                    isAuthenticated && user.role === "admin" && 
+                    <li 
+                        className={showNav ? "nav-item show" : "nav-item"} 
+                        style={{transition: `transform ${250 + authenticatedLinks.length * 100}ms ease-in`}}
+                    >
+                        <Link 
+                            to="/admin" 
+                            className="nav-link"
+                            onClick={() => setShowNav(false)}
+                        >
+                           <i className="fas fa-user-shield"></i>
+                        </Link>
+                    </li>
+                }
             </ul>
         </React.Fragment>
     )

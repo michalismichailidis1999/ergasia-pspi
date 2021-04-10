@@ -203,3 +203,100 @@ form button.btn-secondary{
 }
 
 /* End of admin login */
+
+/* Media Queries */
+
+@media(max-width: 1075px){
+    .admin-container .boxes{
+        width: 100%;
+        grid-gap: 30px;
+    }
+    
+    .charts{
+        width: 100%;
+    }
+
+    table{
+        font-size: 1.1rem !important;
+    }
+}
+
+@media(max-width: 900px){
+    table{
+        font-size: .9rem !important;
+    }
+}
+
+@media(max-width: 820px){
+    .admin-dashboard{
+        width: calc(100vw - 200px);
+        margin-left: 200px;
+    }
+
+    .admin-dashboard h1{
+        font-size: 1.8rem;
+    }
+
+    .sidenav{
+        width: 200px;
+        padding: 10px;
+    }
+
+    .sidenav ul{
+        padding: 5px;
+    }
+
+    .sidenav div.navbar-brand{
+        font-size: 1.3rem;
+    }
+    
+    .sidenav ul li{
+        font-size: 1.1rem;
+    }
+
+    .admin-container .boxes{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 100px);
+    }
+}
+
+@media(max-width: 680px){
+    .admin-dashboard{
+        width: calc(100vw - 150px);
+        margin-left: 150px;
+    }
+
+    .sidenav{
+        width: 150px;
+    }
+
+    .sidenav div.navbar-brand{
+        font-size: 1.1rem;
+    }
+    
+    .sidenav ul li{
+        font-size: .95rem;
+    }
+}
+
+@media(max-width: 600px){
+    .charts{
+        display: none;
+    }
+}
+
+@media(max-width: 400px){ 
+    .admin-dashboard h1{
+        font-size: 1.4rem;
+    }
+
+    .admin-container .boxes .box .icon{
+        font-size: 2.4rem;
+    }
+    
+    .admin-container .boxes .box span{
+        font-size: .8rem;
+    }
+}
+
+/* End of media queries */
