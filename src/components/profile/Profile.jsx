@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import LeftComponent from './LeftComponent'
 import RightComponent from './RightComponent'
 import "./style.css"

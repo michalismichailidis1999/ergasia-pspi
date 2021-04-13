@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import "./style.css"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MyAccount = () => {    
-    const {isAuthenticated, user} = useSelector(state => state.user);
-    const [title, setTitle] = useState("");
+    const {user} = useSelector(state => state.user);
+    
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const handleSubmits = (e) => {
-        setTitle(e.target.value);
-    } 
+  
     return (
         <React.Fragment>
             <ul className="infos">
@@ -17,7 +15,9 @@ const MyAccount = () => {
                     Name: {user.firstName + " " + user.lastName} <button className="change-button" onClick={()=>console.log('Clicked')}>
                         <i className="fas fa-pen"></i> </button> 
                     </li>
-                    
+                    <li>
+                    Role:  {user.role}
+                    </li>
                     <li>
                     Email: {user.email} <button className="change-button" onClick={()=>console.log('Clicked')}>
                         <i className="fas fa-pen"></i> </button>

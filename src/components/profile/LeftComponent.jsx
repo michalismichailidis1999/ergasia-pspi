@@ -1,30 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "./style.css"
 import { logOut } from '../../actions/userActions';
 import {Link} from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setSelectedComponent } from '../../actions/profileActions'
+
 
 const LeftComponent = () => {
+   
+    
     const dispatch = useDispatch()
-    const {isAuthenticated, user} = useSelector(state => state.user);
+    const [count, setState] = useState(false);
+    
+    function handlerTrue(){setState(true)};
+
+    function handlerFalse(){setState(false)};
+    useEffect( () => {
+        console.log(count);
+    }, [setSelectedComponent]);
+
     return (
        
             <div className="leftComponent">
                 <div className="leftComponent-box">
                 <ul className="selectors">
-                    <li>
-                    <Link to="/profile?view-courses" style={{ textDecoration: 'none', color:'inherit' }} onClick={() => {
-                            
-                         }}>
-                                My courses 
-                        </Link>
+                  <li onClick={() => {handlerTrue();
+                dispatch(setSelectedComponent("courses"))
+                }}>
+                                My progress 
                     </li>
-                    <li>
-                    <Link to="/profile?view-account" style={{ textDecoration: 'none', color:'inherit' }} onClick={() => {
-                            
-                        }}>
+                
+                    <li  onClick={() => {handlerFalse();
+                     dispatch(setSelectedComponent("settings"))}}>
                                Profile Settings 
-                       </Link>
+                     
                     </li>
                     <li>
                         <Link to="/" style={{ textDecoration: 'none', color:'inherit' }} onClick={() => {

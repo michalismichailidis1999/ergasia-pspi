@@ -1,12 +1,35 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import "./style.css"
-import { useDispatch, useSelector } from 'react-redux';
+
 
 const MyCourses = () => {
     return (
-        <div>
-            
-        </div>
+   <div>
+             <div className="box">
+                    <div className="icon">
+                        <i className="fas fa-chalkboard"></i>
+                    </div>
+
+                    <span>My progress</span>
+                </div>
+
+
+                <ul className="infos">
+                    <li>
+                    Passed courses:  {3}
+                    </li>
+                    <li>
+                    Active courses:  {5}
+                    </li>
+                    
+                    
+
+                  
+
+                    <button className="learn-more">Learn More</button>
+                </ul>
+
+      </div>  
     )
 }
 

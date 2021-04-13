@@ -1,34 +1,34 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import "./style.css"
 import { useDispatch, useSelector } from 'react-redux';
 import MyAccount from './MyAccount'
 import MyCourses from './MyCourses'
+import { setTableHeadersAndData} from '../../actions/adminActions'
+
+
+
 
 
 const RightComponent = () => {
-    const [componentToLoad, setComponentToLoad] = useState("MyAccount")
+    
+    const dispatch = useDispatch()
+
+    const {selectedComponent} = useSelector(state => state.admin); 
+    
+
+    
+
     useEffect(() => {
-        let search = window.location.search
-        if(search === "?view-account"){
-            setComponentToLoad("MyAccount")
-        }
-        else {
-            setComponentToLoad("MyCources")
-        }
-    }, [window.location.search])
+        dispatch(setTableHeadersAndData(selectedComponent));
+    }, [selectedComponent])
+    
     return (
        
         <div className="rightComponent">
             <div className="rightComponent-box">
-
-                {
-                    componentToLoad === "MyAccount" ? 
-                    <MyAccount/> :
-                    <MyCourses/>  
-
-                }        
-
-
+        {(selectedComponent==="courses") && <MyCourses/>}
+        {(selectedComponent==="settings") &&<MyAccount/>}
+      
             </div>
         </div>
         
