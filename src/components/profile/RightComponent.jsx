@@ -27,7 +27,7 @@ const RightComponent = () => {
         <div className="rightComponent">
             <div className="rightComponent-box">
         {(selectedComponent==="courses") && <MyCourses/>}
-        {(selectedComponent==="settings") &&<MyAccount/>}
+        {(selectedComponent==="settings"||selectedComponent==="") &&<MyAccount/>}
       
             </div>
         </div>

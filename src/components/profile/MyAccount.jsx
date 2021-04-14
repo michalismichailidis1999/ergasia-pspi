@@ -1,26 +1,63 @@
-import React, { useState} from 'react'
+import React, { useState,useEffect} from 'react'
 import "./style.css"
 import { useSelector } from 'react-redux';
 
 const MyAccount = () => {    
     const {user} = useSelector(state => state.user);
-    
+   
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-  
+    const [editState1, setNewEditState1] = useState(true);
+    const [editState2, setNewEditState2] = useState(true);
+    const [name, setName] = useState(user.firstName + " " + user.lastName);
+    const [mail, setMail] = useState(user.email);
+
+    function changeName(n){setName(n)};
+    function changeMail(k){setMail(k)};
+
+    function changeEditState1(){setNewEditState1(!editState1)};
+    function changeEditState2(){setNewEditState2(!editState2)};
+
+    useEffect( () => {
+        
+    }, [editState1,editState2, mail,name]);
+
+    function updateName(){changeName(name);}
+    function updateMail(){changeMail(mail);}
     return (
         <React.Fragment>
             <ul className="infos">
                     <li>
-                    Name: {user.firstName + " " + user.lastName} <button className="change-button" onClick={()=>console.log('Clicked')}>
-                        <i className="fas fa-pen"></i> </button> 
+                    Name: {
+                        editState1 ? 
+                            <>{name}
+                            <button className="change-button" onClick={changeEditState1}>
+                             <i className="fas fa-pen"></i> </button></> 
+                             :
+                             
+                           <>  <input type="text"  defaultValue={name} value={name} onChange={e => changeName(e.target.value)}
+                              />
+                              <button className="change-button" onClick={()=>{ changeEditState1();updateName();}}>
+                        <i className="fas fa-check"></i> </button> </>
+                     }
                     </li>
+
                     <li>
                     Role:  {user.role}
                     </li>
+
                     <li>
-                    Email: {user.email} <button className="change-button" onClick={()=>console.log('Clicked')}>
-                        <i className="fas fa-pen"></i> </button>
+                    Email: {editState2 ? 
+                    <>{mail}
+                    <button className="change-button" onClick={changeEditState2}>
+                        <i className="fas fa-pen"></i> </button></> 
+                        
+                        : 
+                        <><input type="text" defaultValue={mail} value={mail} onChange={s => changeMail(s.target.value)}     />
+                        <button className="change-button" onClick={()=>{ changeEditState2();updateMail();}}>
+                        <i className="fas fa-check"></i> </button></>
+                        }
+                   
                     </li>
 
                     <li>
