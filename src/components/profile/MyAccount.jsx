@@ -1,6 +1,7 @@
 import React, { useState,useEffect} from 'react'
 import "./style.css"
 import { useSelector } from 'react-redux';
+import {toast} from 'react-toastify'
 
 const MyAccount = () => {    
     const {user} = useSelector(state => state.user);
@@ -11,9 +12,11 @@ const MyAccount = () => {
     const [editState2, setNewEditState2] = useState(true);
     const [name, setName] = useState(user.firstName + " " + user.lastName);
     const [mail, setMail] = useState(user.email);
+    
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    function changeName(n){setName(n)};
-    function changeMail(k){setMail(k)};
+    function changeName(n){setName(n);var array=n.split(" "); user.firstName=array[0]; array.shift();user.lastName=array.join(" ");};
+    function changeMail(k){setMail(k);user.email=k;};
 
     function changeEditState1(){setNewEditState1(!editState1)};
     function changeEditState2(){setNewEditState2(!editState2)};
@@ -23,7 +26,7 @@ const MyAccount = () => {
     }, [editState1,editState2, mail,name]);
 
     function updateName(){changeName(name);}
-    function updateMail(){changeMail(mail);}
+    function updateMail(){ changeMail(mail)}
     return (
         <React.Fragment>
             <ul className="infos">
@@ -53,7 +56,8 @@ const MyAccount = () => {
                         <i className="fas fa-pen"></i> </button></> 
                         
                         : 
-                        <><input type="text" defaultValue={mail} value={mail} onChange={s => changeMail(s.target.value)}     />
+                        <><input type="email" defaultValue={mail} value={mail}   onChange={s=>(re.test(s.target.value))? changeMail(s.target.value):
+                            toast.error("Wrong email !")}    />
                         <button className="change-button" onClick={()=>{ changeEditState2();updateMail();}}>
                         <i className="fas fa-check"></i> </button></>
                         }
