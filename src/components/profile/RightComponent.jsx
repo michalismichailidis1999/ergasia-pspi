@@ -1,9 +1,8 @@
 import React from 'react'
 import "./style.css"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MyAccount from './MyAccount'
 import MyCourses from './MyCourses'
-import { setTableHeadersAndData} from '../../actions/adminActions'
 import MyProgress from './MyProgress';
 import CourseForm from './CourseForm';
 import TeacherCourses from './TeacherCourses';
