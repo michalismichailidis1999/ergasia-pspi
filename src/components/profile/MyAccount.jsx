@@ -1,100 +1,218 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState} from 'react'
 import "./style.css"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {changeFirstName, changeLastName, changeEmail, changePassword} from '../../actions/userActions'
 
-const MyAccount = () => {    
+const MyAccount = () => {
+    const dispatch = useDispatch();    
     const {user} = useSelector(state => state.user);
+    const {loading} = useSelector(state => state.form);
    
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [editState1, setNewEditState1] = useState(true);
-    const [editState2, setNewEditState2] = useState(true);
-    const [name, setName] = useState(user.firstName + " " + user.lastName);
-    const [mail, setMail] = useState(user.email);
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
+    const [email, setEmail] = useState(user.email);
 
-    function changeName(n){setName(n)};
-    function changeMail(k){setMail(k)};
+    const [editFirstName, setEditFirstName] = useState(false);
+    const [editLastName, setEditLastName] = useState(false);
+    const [editEmail, setEditEmail] = useState(false);
 
-    function changeEditState1(){setNewEditState1(!editState1)};
-    function changeEditState2(){setNewEditState2(!editState2)};
+    const [currentEditedValue, setCurrentEditedValue] = useState(null);
 
-    useEffect( () => {
-        
-    }, [editState1,editState2, mail,name]);
+    const handlePasswordChange = (e) => {
+        e.preventDefault();
 
-    function updateName(){changeName(name);}
-    function updateMail(){changeMail(mail);}
+        setCurrentEditedValue("password");
+
+        dispatch(changePassword(user.id, password, newPassword));
+
+        setPassword("")
+        setNewPassword("")
+    }
+
     return (
         <React.Fragment>
             <ul className="infos">
-                    <li>
-                    Name: {
-                        editState1 ? 
-                            <>{name}
-                            <button className="change-button" onClick={changeEditState1}>
-                             <i className="fas fa-pen"></i> </button></> 
-                             :
-                             
-                           <>  <input type="text"  defaultValue={name} value={name} onChange={e => changeName(e.target.value)}
-                              />
-                              <button className="change-button" onClick={()=>{ changeEditState1();updateName();}}>
-                        <i className="fas fa-check"></i> </button> </>
-                     }
-                    </li>
+                <li className="border-bottom mb-2 pb-2">
+                    <label>First Name:</label>
+                    {
+                        !editFirstName ? 
+                            <>
+                                <div className="d-flex align-items-center">
+                                    {firstName} {loading && currentEditedValue === "firstName" && <span className="spinner-border"></span>}
+                                    <button className="change-button" onClick={() => {
+                                        if(loading){
+                                            return;
+                                        }
 
-                    <li>
-                    Role:  {user.role}
-                    </li>
+                                        if(editLastName){
+                                            setEditLastName(false);
+                                        }
 
-                    <li>
-                    Email: {editState2 ? 
-                    <>{mail}
-                    <button className="change-button" onClick={changeEditState2}>
-                        <i className="fas fa-pen"></i> </button></> 
+                                        if(editEmail){
+                                            setEditEmail(false);
+                                        }
+
+                                        setCurrentEditedValue("firstName")
+                                        setEditFirstName(true)
+                                    }}>
+                                        <i className="fas fa-pen"></i>
+                                    </button>
+                                </div>
+                            </>
+
+                        :
+                            
+                            <>
+                                <div className="mb-2">
+                                    <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)}/>
+                                </div>
+                                <div className="mb-2">
+                                    <button className="btn btn-primary update-btn" onClick={() => {
+                                        dispatch(changeFirstName(user.id, firstName));
+                                        setEditFirstName(false);
+                                    }}>
+                                        Update
+                                    </button>
+                                    <button onClick={() => setEditFirstName(false)} className="btn btn-secondary">Cancel</button>
+                                </div>
+                            </>
+                    }
+                </li>
+                
+                <li className="border-bottom mb-2 pb-2">
+                    <label>Last Name:</label>
+                    {
+                        !editLastName ? 
+                            <>
+                                <div className="d-flex align-items-center">
+                                    {lastName} {loading && currentEditedValue === "lastName" && <span className="spinner-border"></span>}
+                                    <button className="change-button" onClick={() => {
+                                        if(loading){
+                                            return;
+                                        }
+
+                                        if(editFirstName){
+                                            setEditFirstName(false);
+                                        }
+
+                                        if(editEmail){
+                                            setEditEmail(false);
+                                        }
+
+                                        setCurrentEditedValue("lastName")
+                                        setEditLastName(true)
+                                    }}>
+                                        <i className="fas fa-pen"></i>
+                                    </button>
+                                </div>
+                            </>
+
+                        :
+                            
+                            <>
+                                <div className="mb-2">
+                                    <input type="text" value={lastName} onChange={e => setLastName(e.target.value)}/>
+                                </div>
+                                <div className="mb-2">
+                                    <button disabled={loading} className="btn btn-primary update-btn" onClick={() => {
+                                        dispatch(changeLastName(user.id, lastName))
+                                        setEditLastName(false);
+                                    }}>
+                                        Update {loading && <div className="spinner-border"></div>}
+                                    </button>
+                                    <button onClick={() => setEditLastName(false)} className="btn btn-secondary">Cancel</button>
+                                </div>
+                            </>
+                    }
+                </li>
+
+                <li className="border-bottom mb-2 pb-2">
+                    <label>Role:</label> {user.role}
+                </li>
+
+                <li className="border-bottom mb-2 pb-2">
+                    <label>Email:</label> 
+                    {!editEmail ? 
+                        <>
+                            <div className="d-flex align-items-center">
+                                {email} {loading && currentEditedValue === "email" && <span className="spinner-border"></span>}
+                                <button className="change-button" onClick={() => {
+                                    if(loading){
+                                        return;
+                                    }
+
+                                    if(editFirstName){
+                                        setEditFirstName(false);
+                                    }
+
+                                    if(editLastName){
+                                        setEditLastName(false);
+                                    }
+
+                                    setCurrentEditedValue("email")
+                                    setEditEmail(true)
+                                }}>
+                                <i className="fas fa-pen"></i> </button>
+                            </div>
+                        </> 
                         
                         : 
-                        <><input type="text" defaultValue={mail} value={mail} onChange={s => changeMail(s.target.value)}     />
-                        <button className="change-button" onClick={()=>{ changeEditState2();updateMail();}}>
-                        <i className="fas fa-check"></i> </button></>
-                        }
-                   
-                    </li>
+                        <>
+                            <div className="mb-2">
+                                <input type="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                            </div>
+                            <div className="mb-2">
+                                <button disabled={loading} className="btn btn-primary update-btn" onClick={() => {
+                                    dispatch(changeEmail(user.id, email))
+                                    setEditEmail(false);
+                                }}>
+                                    Update {loading && <div className="spinner-border"></div>}
+                                </button>
+                                <button onClick={() => setEditEmail(false)} className="btn btn-secondary">Cancel</button>
+                            </div>
+                        </>
+                    }
+                </li>
 
-                    <li>
-                    Change Password: 
-                        <i className="fas fa-lock"></i> 
-                    </li>
-
-
-                </ul>
+                <li>
+                    Change Password: <i className="fas fa-lock"></i> 
+                </li>
+            </ul>
                     
-        <form className="contact-form pass">
-            <div>
-                <div>Old password</div>
-                <input 
+            <form className="contact-form pass" onSubmit={handlePasswordChange}>
+                <div>
+                    <div>Old Password</div>
+                    <input 
                         type="password" 
                         className="form-control"
                         placeholder="Enter your old password..."
                         value={password} 
                         onChange={e => setPassword(e.target.value)}
-                    
                     />
-            </div>
+                </div>
 
-            <div>
-                <div>New password</div>
-               
-                <input 
+                <div>
+                    <div>New Password</div>
+                
+                    <input 
                         type="password" 
                         className="form-control"
                         placeholder="Enter your new password..."
                         value={newPassword} 
                         onChange={e => setNewPassword(e.target.value)}
                     />
-            </div>
+                </div>
 
-            <button>Change</button>
-        </form>
+                <button
+                    type="submit"
+                    className="btn btn-primary" 
+                    disabled={(password === "" && newPassword === "") || loading}
+                >
+                    Change {loading && currentEditedValue === "password" && <div className="spinner-border"></div>}
+                </button>
+            </form>
         
         </React.Fragment>
     )

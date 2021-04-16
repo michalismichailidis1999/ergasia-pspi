@@ -1,5 +1,13 @@
 import courses from '../dummyData/courses'
-import {ENROLL_TO_COURSE, FILTER_COURSES, SEARCH_COURSE, UNENROLL_FROM_COURSE} from '../actionTypes/courseActionTypes'
+import {
+    CREATE_COURSE, 
+    ENROLL_TO_COURSE, 
+    FILTER_COURSES, 
+    SEARCH_COURSE, 
+    SET_COURSE_TO_EDIT, 
+    UNENROLL_FROM_COURSE, 
+    UPDATE_COURSE
+} from '../actionTypes/courseActionTypes'
 
 const initialState = {
     courses,
@@ -13,13 +21,16 @@ const initialState = {
             enrolls: course.enrolls,
             rating: course.rating
         }
-    })
+    }),
+    courseToEdit: null
 }
 
 const courseReducer = (state=initialState, action) => {
     const {type, payload} = action;
 
     const enrolledCourses = state.enrolledCourses
+    let allCourses = state.allCourses;
+    let courses = state.courses;
 
     switch(type){
         case ENROLL_TO_COURSE:
@@ -32,6 +43,16 @@ const courseReducer = (state=initialState, action) => {
         case SEARCH_COURSE:
             let course = state.allCourses.find(course => course.title === payload)
             return {...state, courses: course ? [course] : []}
+        case CREATE_COURSE:
+            allCourses.push({id: allCourses[courses.length - 1].id + 1,...payload})
+            courses.push({id: courses[courses.length - 1].id + 1,...payload})
+            return {...state, allCourses, courses}
+        case UPDATE_COURSE:
+            allCourses = allCourses.map(course => course.id === payload.id ? payload : course);
+            courses = courses.map(course => course.id === payload.id ? payload : course);
+            return {...state, courses}
+        case SET_COURSE_TO_EDIT:
+            return {...state, courseToEdit: payload}
         default:
             return state;
     }

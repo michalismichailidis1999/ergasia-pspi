@@ -1,4 +1,13 @@
-import { LOAD_USER, LOGIN, LOG_OUT, REGISTER } from "../actionTypes/userActionTypes";
+import { 
+    CHANGE_EMAIL, 
+    CHANGE_FIRSTNAME, 
+    CHANGE_LASTNAME, 
+    CHANGE_PASSWORD, 
+    LOAD_USER, 
+    LOGIN, 
+    LOG_OUT, 
+    REGISTER
+} from "../actionTypes/userActionTypes";
 import {toast} from 'react-toastify'
 import { loading, loadingCompleted } from "./formActions";
 import {userCreated} from '../actions/dummyDataActions'
@@ -104,5 +113,111 @@ export const loadUser = () => {
         return {type: LOAD_USER, payload: JSON.parse(user)}
     }else{
         return {type: "CANNOT_LOAD_USER"}
+    }
+}
+
+export const changeFirstName = (userId, firstName) => {
+    return async (dispatch) => {
+        const users = store.getState().dummyData.users
+
+        dispatch(loading())
+
+        await setTimeout(() => {
+            try {
+                let user = users.find(user => user.id === userId);
+    
+                if(!user){
+                    toast.error("First name could't be updated");
+                }else{
+                    toast.success("Your first name updated successfully!")
+                    dispatch({type: CHANGE_FIRSTNAME, payload: {userId, firstName}})
+                }
+            } catch (err) {
+                toast.error("First name could't be updated");
+            }finally{
+                dispatch(loadingCompleted())
+            }
+        }, 1000)
+    }
+    
+}
+
+export const changeLastName = (userId, lastName) => {
+    return async (dispatch) => {
+        const users = store.getState().dummyData.users
+
+        dispatch(loading())
+
+        await setTimeout(() => {
+            try {
+                let user = users.find(user => user.id === userId);
+    
+                if(!user){
+                    toast.error("Last name could't be updated");
+                }else{
+                    toast.success("Your last name updated successfully!")
+                    dispatch({type: CHANGE_LASTNAME, payload: {userId, lastName}})
+                }
+            } catch (err) {
+                toast.error("Last name could't be updated");
+            }finally{
+                dispatch(loadingCompleted())
+            }
+        }, 1000)
+    }
+    
+}
+
+export const changeEmail = (userId, email) => {
+    return async (dispatch) => {
+        const users = store.getState().dummyData.users
+
+        dispatch(loading())
+
+        await setTimeout(() => {
+            try {
+                let user = users.find(user => user.id === userId);
+    
+                if(!user){
+                    toast.error("Email name could't be updated");
+                }else{
+                    toast.success("Your email name updated successfully!")
+                    dispatch({type: CHANGE_EMAIL, payload: {userId, email}})
+                }
+            } catch (err) {
+                toast.error("Email name could't be updated");
+            }finally{
+                dispatch(loadingCompleted())
+            }
+        }, 1000)
+    }
+}
+
+export const changePassword = (userId, password, newPassword) => {
+    return async (dispatch) => {
+        const users = store.getState().dummyData.users
+
+        dispatch(loading())
+
+        await setTimeout(() => {
+            try {
+                let user = users.find(user => user.id === userId);
+    
+                if(!user){
+                    toast.error("Password name could't be updated");
+                }else{
+                    if(user.password !== password){
+                        toast.error("You didn't type correctly your password!");
+                    }else{
+                        toast.success("Your password name updated successfully!")
+                        dispatch({type: CHANGE_PASSWORD, payload: {userId, password: newPassword}})
+                    }
+                }
+            } catch (err) {
+                toast.error("Password name could't be updated");
+            }finally{
+                dispatch(loadingCompleted())
+            }
+        }, 1000)
     }
 }

@@ -6,15 +6,11 @@ import "./style.css"
 
 const Profile = () => {
        return (
-        <div className="layout">
-            <div className="container profile-container">
-                <LeftComponent/>
+        <div className="layout profile">
+            <LeftComponent/>
 
-                <RightComponent/>
-            </div>
-            
+            <RightComponent/>
         </div>
-      
     )
 }
 

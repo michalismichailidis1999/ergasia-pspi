@@ -1,35 +1,18 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import Course from '../dashboard/Course';
 import "./style.css"
 
 
 const MyCourses = () => {
+    const {enrolledCourses} = useSelector(state => state.course);
+
     return (
-   <div>
-             <div className="box">
-                    <div className="icon">
-                        <i className="fas fa-chalkboard"></i>
-                    </div>
-
-                    <span>My progress</span>
-                </div>
-
-
-                <ul className="infos">
-                    <li>
-                    Passed courses:  {3}
-                    </li>
-                    <li>
-                    Active courses:  {5}
-                    </li>
-                    
-                    
-
-                  
-
-                    <button className="learn-more">Learn More</button>
-                </ul>
-
-      </div>  
+        <div className="courses">
+            {enrolledCourses.map(course => (
+                <Course key={course.id} course={course}/>
+            ))}
+        </div>  
     )
 }
 

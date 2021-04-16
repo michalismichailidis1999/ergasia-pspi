@@ -1,43 +1,45 @@
-.profile-container{
-    padding-top: 40px;
-    display: flex;
-    justify-content: left;
-    align-items: flex-start;
-    height: 100% !important;
-    font-family: "Roboto", sans-serif ;
+.profile{
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif ;
+  position: relative;
+  padding:  30px 0;
 }
 
 .leftComponent{
-  padding-top: 80px;
-  width: 380px;
-  margin-left: 10px;
-  margin-right: 120px;
+  margin-right: 80px;
 }
+
 .leftComponent-box{
   background: var(--main-color);
   color: white;
-  box-shadow: 10px 10px 50px rgba(6, 4, 29, 0.842);
-  padding: 20px 80px 20px 20px;
-  
-  border-radius: 40px;
-  margin-bottom: 60px;
-  margin-top: 60px;
+  border-radius: 15px;
 }
 
 .selectors{
-  padding-left: 20%;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 .selectors li{
+  width: fit-content;
+  padding: 5px 10px;
   margin-bottom: 20px;
   font-weight: 500 ;
-  display: flex;
   border-radius: 10px;
-  justify-content: center!important;
   transition: all 150ms ease-in;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selectors li:last-child{
@@ -45,56 +47,88 @@
 }
 
 .selectors li i{
-  margin-right: 14px;
+  display: none;
+  font-size: 1.8rem;
 }
- .selectors li:hover{
+
+.selectors li:hover{
   cursor: pointer;
-  background:  var(--main-color-lighter);;
-
+  background:  var(--main-color-lighter);
 }
-
 
 /*
 Right Component
 */
-.rightComponent{
-  width: 800px;
-}
 .rightComponent-box {
   background-color: white;
   border-radius: 30px;
-  box-shadow: 10px 10px 50px rgba(6, 4, 29, 0.842);
-  margin-bottom: 40px;
-  height: 500px;
-  
-  
+  box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.15);
+  padding: 20px 35px;
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.rightComponent .rightComponent-box::-webkit-scrollbar{
+  width: 8px;
+}
+
+.rightComponent .rightComponent-box::-webkit-scrollbar-thumb{
+  background: #555;
+  border-radius: 8px;
+}
+
+.rightComponent .rightComponent-box::-webkit-scrollbar-thumb:hover{
+  background: #777;
 }
 
 .infos{
-  padding-top: 40px;
-  padding-left: 20%;
-  margin-bottom: 15px;
-  margin-top: 15px;
+  padding: 0;
+  margin-bottom: 0;
 }
+
 .infos li {
   font-weight: 500 !important;
-  padding: 10px;
 }
+
 .infos li i{
-  margin-left: 20px;
+  margin-left: 10px;
 }
+
 .pass{
-  
-  padding-left: 20%;
   font-weight: 500 !important;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
 }
 
 .change-button{
   padding: 0;
-border: none;
-background: none;
+  border: none;
+  background: none;
+}
+
+.update-btn{
+  margin-right: 10px;
+}
+
+.rightComponent .contact-form{
+  margin-top: 10px;
+  margin-right: 0;
+}
+
+.rightComponent .contact-form{
+  font-weight: 300 !important;
+}
+
+.infos li{
+  font-weight: 300 !important;
+}
+
+.infos label{
+  margin-right: 10px !important;
+  font-weight: 400 !important;
+}
+
+.rightComponent .contact-form > div{
+  margin-bottom: 15px;
 }
 
 /*
@@ -103,20 +137,18 @@ my courses
  .box{
   background: var(--main-color);
   color: white;
-  margin-top: 20px!important;
-  padding: 20px!important;
-
   flex-direction: column;
   justify-content: center;
-  padding: 10px 20px 10px 10px;
+  padding: 20px;
   border-radius: 30px;
+  margin-bottom: 20px;
 }
  .box .icon{
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3.4rem;
-  margin: 10px;
+  margin-bottom: 5px;
 }
 
  .box span{
@@ -126,22 +158,171 @@ my courses
   text-align: center;
 }
 
-
-
 .learn-more{
+  display: block;
+  margin: 0 auto;
   background: var(--main-color);
   color: white;
   border: none;
   outline: none;
-  margin-top: 8%;
-  margin-left: 20%;
-  padding: 3px 45px;
+  margin-top: 20px;
+  padding: 3px 25px;
   border-radius: 5px;
   font-weight: lighter;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   transition: background-color 150ms ease-in;
 }
 
-.clearn-more:hover{
+.learn-more:hover{
   background: var(--main-color-lighter);
+}
+
+/* Courses */
+
+.rightComponent .courses{
+  grid-template-columns: repeat(2, 250px);
+  grid-gap: 30px;
+}
+
+/* Teacher Components */
+
+.course-form{
+  font-family: "Roboto", sans-serif !important;
+  margin-top: 0;
+}
+
+.course-form h4{
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: #333;
+}
+
+.course-form label{
+  font-weight: 300 !important;
+}
+
+table tr td i:hover{
+  color: #888;
+}
+
+
+/* End of teacher components */
+
+/* End of courses */
+
+/* Media Queries */
+@media(max-width: 915px){
+  .rightComponent .courses{
+    grid-template-columns: 250px;
+    grid-gap: 30px;
+  }
+}
+
+@media(max-width: 740px){
+  .infos li{
+    margin-bottom: 10px;
+  }
+
+  .infos li:last-child{
+    margin-bottom: 0;
+  }
+
+  .infos label{
+    display: block;
+  }
+}
+
+@media(max-width: 640px){
+  .profile{
+    width: 93%;
+  }
+
+  .leftComponent{
+    margin-right: 35px;
+  }
+
+  .rightComponent-box{
+    padding: 20px;
+  }
+}
+
+@media(max-width: 600px){
+  .rightComponent .contact-form{
+    width: 100%;
+  }
+}
+
+@media(max-width: 575px){
+  .rightComponent .courses{
+      width: 100%;
+  }
+}
+
+@media(max-width: 500px){
+  .leftComponent{
+    position: absolute;
+    top: 50%;
+    left: -7%;
+    transform: translateY(-50%);
+    margin-right: 0;
+  }
+
+  .leftComponent-box{
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+  }
+
+  .selectors li span{
+    display: none;
+  }
+
+  .selectors li i{
+    display: inline;
+  }
+
+  .rightComponent{
+    margin-left: 50px;
+    font-size: 17px;
+  }
+
+  .contact-form input[type="password"]{
+    padding: 5px 10px;
+  }
+
+  .contact-form input[type="password"]::placeholder{
+    font-size: 15px;
+  }
+
+  .box .icon{
+    font-size: 2.8rem;
+  }
+
+  .box span{
+    font-size: 1.1rem;
+  }
+
+  .learn-more{
+    /* padding: 3px 25px; */
+    font-size: 1.1rem;
+  }
+}
+
+@media(max-width: 475px){
+  .rightComponent .courses{
+      grid-template-columns: 180px;
+  }
+}
+
+@media(max-width: 400px){
+  .selectors li i{
+    font-size: 1.3rem;
+  }
+
+  .rightComponent{
+    margin-left: 60px;
+  }
+
+  .selectors{
+    padding: 10px;
+  }
 }

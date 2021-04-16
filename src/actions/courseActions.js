@@ -1,4 +1,12 @@
-import { ENROLL_TO_COURSE, FILTER_COURSES, SEARCH_COURSE, UNENROLL_FROM_COURSE } from "../actionTypes/courseActionTypes"
+import { 
+    CREATE_COURSE, 
+    ENROLL_TO_COURSE, 
+    FILTER_COURSES, 
+    SEARCH_COURSE, 
+    SET_COURSE_TO_EDIT, 
+    UNENROLL_FROM_COURSE, 
+    UPDATE_COURSE 
+} from "../actionTypes/courseActionTypes"
 
 export const enrollToCourse = (course) => {
     return {type: ENROLL_TO_COURSE, payload: course}
@@ -14,4 +22,16 @@ export const filterCourses = (filteredCourses) => {
 
 export const searchCourse = (title) => {
     return {type: SEARCH_COURSE, payload: title};
+}
+
+export const createCourse = (course) => {
+    return {type: CREATE_COURSE, payload: {...course, rating: 0, enrolls: 0}};
+}
+
+export const updateCourse = (course) => {
+    return {type: UPDATE_COURSE, payload: course};
+}
+
+export const setCourseToEdit = (course) => {
+    return {type: SET_COURSE_TO_EDIT, payload: course}
 }

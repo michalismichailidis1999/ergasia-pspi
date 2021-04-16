@@ -5,6 +5,7 @@ import "./style.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedLinks, links } from './links';
 import { logOut } from '../../actions/userActions';
+import { setSelectedComponent } from '../../actions/profileActions';
 
 const Navbar = () => {
 
@@ -50,16 +51,40 @@ const Navbar = () => {
 
                                         <ul className={showDropmenu ? "dropdown-menu show" : "dropdown-menu"}>
                                             <li>
-                                                <Link to="/profile?view-my-courses" className="dropdown-item" onClick={() => setShowDropmenu(false)}>
+                                                <Link to="/profile" className="dropdown-item" onClick={() => {
+                                                    dispatch(setSelectedComponent("courses"));
+                                                    setShowDropmenu(false)
+                                                }}>
                                                     My Courses <i className="fas fa-book"></i>
                                                 </Link>
                                             </li>
 
-                                            <li>
-                                                <Link to="/profile?view-account" className="dropdown-item" onClick={() => setShowDropmenu(false)}>
-                                                    Profile <i className="fas fa-user"></i>
-                                                </Link>
-                                            </li>
+                                            {
+                                                user.role === "teacher" &&
+                                                <li>
+                                                    <Link 
+                                                        className="dropdown-item" 
+                                                        to="/profile" 
+                                                        onClick={() => {
+                                                            setShowDropmenu(false)
+                                                            dispatch(setSelectedComponent("course-form"));
+                                                        }}
+                                                    >
+                                                        Create Course <i className="fas fa-folder-plus"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+
+                                            {   
+                                                user.role !== "admin" &&
+                                                <li>
+                                                    <Link to="/profile" className="dropdown-item" onClick={() => {
+                                                        setShowDropmenu(false)
+                                                    }}>
+                                                        Profile <i className="fas fa-user"></i>
+                                                    </Link>
+                                                </li>
+                                            }
 
                                             {
                                                 user.role === "admin" && 
@@ -73,13 +98,13 @@ const Navbar = () => {
                                                     </Link>
                                                 </li>
                                             }
-                                            
+
                                             <li>
                                                 <Link to="/" className="dropdown-item" onClick={() => {
                                                     setShowDropmenu(false)
                                                     dispatch(logOut())
                                                 }}>
-                                                    Log out <i className="fas fa-power-off"></i>
+                                                    Log Out <i className="fas fa-power-off"></i>
                                                 </Link>
                                             </li>
                                         </ul>

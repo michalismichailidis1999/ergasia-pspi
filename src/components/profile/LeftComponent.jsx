@@ -1,55 +1,71 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import "./style.css"
 import { logOut } from '../../actions/userActions';
 import {Link} from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedComponent } from '../../actions/profileActions'
 
-
 const LeftComponent = () => {
-   
-    
     const dispatch = useDispatch()
-    const [count, setState] = useState(false);
     
-    function handlerTrue(){setState(true)};
-
-    function handlerFalse(){setState(false)};
-    useEffect( () => {
-        console.log(count);
-    }, [setSelectedComponent]);
+    const {user} = useSelector(state => state.user)
 
     return (
-       
-            <div className="leftComponent">
-                <div className="leftComponent-box">
+        <div className="leftComponent">
+            <div className="leftComponent-box">
                 <ul className="selectors">
-                  <li onClick={() => {handlerTrue();
-                dispatch(setSelectedComponent("courses"))
-                }}>
-                                My progress 
+                    {
+                        user.role === "student" && 
+                        <>
+                            <li 
+                                onClick={() => {
+                                    dispatch(setSelectedComponent("progress"))
+                                }}
+                            >
+                                <span>My Progress</span> <i className="fas fa-tasks"></i>
+                            </li>
+                            
+                        </>
+                    }
+
+                    {
+                        user.role === "teacher" &&
+                        <>
+                            <li 
+                                onClick={() => {
+                                    dispatch(setSelectedComponent("course-form"))
+                                }}
+                            >
+                                <span>Create Course</span> <i className="fas fa-tasks"></i>
+                            </li>
+                        </>
+                    }
+
+                    <li 
+                        onClick={() => {
+                            dispatch(setSelectedComponent("courses"))
+                        }}
+                    >
+                        <span>My Courses</span> <i className="fas fa-chalkboard-teacher"></i>
                     </li>
-                
-                    <li  onClick={() => {handlerFalse();
-                     dispatch(setSelectedComponent("settings"))}}>
-                               Profile Settings 
-                     
+
+                    <li  
+                        onClick={() => {
+                            dispatch(setSelectedComponent("settings"))
+                        }}
+                    >
+                        <span>Profile Settings</span> <i className="fas fa-users-cog"></i>
                     </li>
                     <li>
                         <Link to="/" style={{ textDecoration: 'none', color:'inherit' }} onClick={() => {
-                             dispatch(logOut())
-                         }}>
-                                Logout 
+                            dispatch(logOut())
+                        }}>
+                            <span>Log Out</span> <i className="fas fa-power-off"></i>
                         </Link>
-                     </li>
-                    
+                    </li>
                 </ul>
-
-
-                
-                </div>
             </div>
-       
+        </div>
     )
 }
 

@@ -1,13 +1,10 @@
-import { toast } from "react-toastify"
 import { SET_IS_IN_ADMIN_AREA, SET_SELECTED_COMPONENT, SET_TABLE_HEADERS_AND_BODY, SET_USER_ROLE } from "../actionTypes/adminActionTypes"
-import { LOGIN } from "../actionTypes/userActionTypes"
 import {
     userTableHeaders,
     courseTableHeaders,
     categoryTableHeaders,
 } from '../dummyData/table'
 import store from '../store'
-import { loading, loadingCompleted } from "./formActions"
 
 export const setIsInAdminArea = (value) => {
     return {type: SET_IS_IN_ADMIN_AREA, payload: value}

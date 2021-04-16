@@ -6,7 +6,8 @@ const courses = [
         description: "Complete course for Linear Algebra. Learn everything from basics to advanced.",
         category: "Maths",
         enrolls: 100,
-        rating: 4.5
+        rating: 4.5,
+        teacherId: 1
     },
     {
         id: 2,
@@ -15,7 +16,8 @@ const courses = [
         description: "Learn CSS in just 2 hours.",
         category: "Computer Science",
         enrolls: 90,
-        rating: 4
+        rating: 4,
+        teacherId: 1
     },
     {
         id: 3,
@@ -24,7 +26,8 @@ const courses = [
         description: "Complete course for AWS. Learn everything from basics to advanced.",
         category: "Computer Science",
         enrolls: 80,
-        rating: 3.3
+        rating: 3.3,
+        teacherId: 1
     },
     {
         id: 4,
@@ -33,7 +36,8 @@ const courses = [
         description: "Complete course for Excel from A-Z.",
         category: "Computer Science",
         enrolls: 70,
-        rating: 5
+        rating: 5,
+        teacherId: 1
     },
     {
         id: 5,
@@ -42,7 +46,8 @@ const courses = [
         description: "Learn how to create your own websites using React Js.",
         category: "Computer Science",
         enrolls: 140,
-        rating: 5
+        rating: 5,
+        teacherId: 1
     },
     {
         id: 6,
@@ -51,7 +56,8 @@ const courses = [
         description: "Learn the basics for Data Science. This course will provide you the essentials needed to become a data analyst.",
         category: "Computer Science",
         enrolls: 250,
-        rating: 2
+        rating: 2,
+        teacherId: 1
     },
     {
         id: 7,
@@ -60,7 +66,8 @@ const courses = [
         description: "Learn HTML in just 2 hours.",
         category: "Computer Science",
         enrolls: 400,
-        rating: 2.5
+        rating: 2.5,
+        teacherId: 1
     },
     {
         id: 8,
@@ -69,7 +76,8 @@ const courses = [
         description: "Learn how to make responsive websites using CSS.",
         category: "Computer Science",
         enrolls: 40,
-        rating: 4.5
+        rating: 4.5,
+        teacherId: 1
     },
     {
         id: 9,
@@ -78,7 +86,8 @@ const courses = [
         description: "Learn the basics for python in 4 hours.",
         category: "Computer Science",
         enrolls: 430,
-        rating: 4
+        rating: 4,
+        teacherId: 1
     },
     {
         id: 10,
@@ -87,7 +96,8 @@ const courses = [
         description: "Create a social media application using React Js & Express js.",
         category: "Computer Science",
         enrolls: 180,
-        rating: 3.1
+        rating: 3.1,
+        teacherId: 1
     },
     {
         id: 11,
@@ -96,7 +106,8 @@ const courses = [
         description: "Learn the basics for javascript in 3 hours.",
         category: "Computer Science",
         enrolls: 210,
-        rating: 4.8
+        rating: 4.8,
+        teacherId: 1
     },
     {
         id: 12,
@@ -105,7 +116,8 @@ const courses = [
         description: "Learn tensorflow in just 7 hours.",
         category: "Computer Science",
         enrolls: 135,
-        rating: 5
+        rating: 5,
+        teacherId: 1
     },
 ]
 
