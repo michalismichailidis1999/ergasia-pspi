@@ -13,6 +13,8 @@ import AdminRoute from './AdminRoute'
 import AdminDashboard from '../admin/Dashboard'
 import AdminLogin from '../admin/Login'
 import { useSelector } from 'react-redux';
+import Course from '../course/Course';
+import Lesson from '../course/Lesson';
 
 const Routes = () => {
     const {user} = useSelector(state => state.user)
@@ -31,6 +33,8 @@ const Routes = () => {
             <Route exact path="/contact" component={Contact}/>
             <PrivateRoute exact path="/dashboard" component={Dashboard}/>
             <PrivateRoute exact path="/profile" component={Profile}/>
+            <PrivateRoute exact path="/course/:courseId" component={Course}/>
+            <PrivateRoute exact path="/lesson/:lessonId" component={Lesson}/>
             <AdminRoute exact path="/admin" component={AdminDashboard}/>
             <Route exact path="/admin/login" component={AdminLogin} />
         </Switch>

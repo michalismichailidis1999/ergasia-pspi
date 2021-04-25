@@ -1,0 +1,46 @@
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import Section from './Section'
+
+const Sections = () => {
+    const {user} = useSelector(state => state.user);
+
+    const [addSection, setAddSection] = useState(false);
+    const [sectionTitle, setSectionTitle] = useState("")
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        setAddSection(false);
+    }
+
+    return (
+        <div className="course-sections">
+            <Section/>
+
+            {
+                user.role === "teacher" &&
+                <React.Fragment>
+                    {!addSection && <span onClick={() => setAddSection(true)}>Add Section +</span>}
+
+                    {
+                        addSection && 
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label className="form-label">Section Title</label>
+                                <input type="text" className="form-control" value={sectionTitle} onChange={e => setSectionTitle(e.target.value)}/>
+                            </div>
+
+                            <button type="submit" className="btn btn-primary">Add</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => {
+                                setAddSection(false)
+                            }}>Cancel</button>
+                        </form>
+                    }
+                </React.Fragment>
+            }
+        </div>
+    )
+}
+
+export default Sections

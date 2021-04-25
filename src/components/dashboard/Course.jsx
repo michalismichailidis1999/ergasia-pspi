@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {enrollToCourse, unenrollFromCourse} from '../../actions/courseActions'
 
@@ -12,7 +13,9 @@ const Course = ({course}) => {
 
     return (
         <div className={!isEnrolled ? "course" : "course enrolled"}>
-            <img src={course.imgSrc} alt="Linear Algebra"/>
+            <Link to={`/course/${course.id}`}>
+                <img src={course.imgSrc} alt="Linear Algebra"/>
+            </Link>
 
             <div className="course-body">
                 <p>{course.description}</p>

@@ -121,4 +121,57 @@ const courses = [
     },
 ]
 
+export const sections = [
+    {
+        id: 1,
+        courseId: 1,
+        title: "Section 1",
+        lessons: [
+            {
+                id: 1,
+                sectionId: 1,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra"
+            },
+            {
+                id: 2,
+                sectionId: 1,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra 2"
+            },
+            {
+                id: 3,
+                sectionId: 1,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra 3"
+            }
+        ]
+    },
+    {
+        id: 2,
+        courseId: 1,
+        title: "Section 2",
+        lessons: [
+            {
+                id: 4,
+                sectionId: 2,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra 4"
+            },
+            {
+                id: 5,
+                sectionId: 2,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra 5"
+            },
+            {
+                id: 6,
+                sectionId: 2,
+                pdfURL: "/assets/pdfs/linear-algebra-course.pdf",
+                title: "Introduction to Linear Algebra 6"
+            }
+        ]
+    },
+]
+
 export default courses;

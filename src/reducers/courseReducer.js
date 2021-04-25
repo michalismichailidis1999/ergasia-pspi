@@ -1,7 +1,8 @@
-import courses from '../dummyData/courses'
+import courses, {sections, lessons} from '../dummyData/courses'
 import {
     CREATE_COURSE, 
     ENROLL_TO_COURSE, 
+    FETCH_SECTIONS, 
     FILTER_COURSES, 
     SEARCH_COURSE, 
     SET_COURSE_TO_EDIT, 
@@ -22,7 +23,9 @@ const initialState = {
             rating: course.rating
         }
     }),
-    courseToEdit: null
+    courseToEdit: null,
+    allSections: sections,
+    sections: [],
 }
 
 const courseReducer = (state=initialState, action) => {
@@ -53,6 +56,8 @@ const courseReducer = (state=initialState, action) => {
             return {...state, courses}
         case SET_COURSE_TO_EDIT:
             return {...state, courseToEdit: payload}
+        case FETCH_SECTIONS:
+            return {...state, sections: payload}
         default:
             return state;
     }
