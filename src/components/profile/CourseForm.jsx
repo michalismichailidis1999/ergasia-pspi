@@ -8,21 +8,21 @@ const CourseForm = () => {
 
     const {user} = useSelector(state => state.user);
     const {categories} = useSelector(state => state.category);
-    const {courseToEdit} = useSelector(state => state.course);
+    const {currentCourse} = useSelector(state => state.course);
 
-    const [title, setTitle] = useState(courseToEdit ? courseToEdit.title : "")
-    const [category, setCategory] = useState(courseToEdit ? courseToEdit.title : categories[0].title)
-    const [description, setDescription] = useState(courseToEdit ? courseToEdit.description : "")
-    const [imgSrc, setImgSrc] = useState(courseToEdit ? courseToEdit.imgSrc : "");
+    const [title, setTitle] = useState(currentCourse ? currentCourse.title : "")
+    const [category, setCategory] = useState(currentCourse ? currentCourse.title : categories[0].title)
+    const [description, setDescription] = useState(currentCourse ? currentCourse.description : "")
+    const [imgSrc, setImgSrc] = useState(currentCourse ? currentCourse.imgSrc : "");
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(courseToEdit){
+        if(currentCourse){
             if(imgSrc !== ""){
-                dispatch(updateCourse({...courseToEdit, title, description, category}));
+                dispatch(updateCourse({...currentCourse, title, description, category}));
             }else{
-                dispatch(updateCourse({...courseToEdit, title, description, category, imgSrc}));
+                dispatch(updateCourse({...currentCourse, title, description, category, imgSrc}));
             }
         }else{
             dispatch(createCourse({title, category, description, imgSrc, teacherId: user.id}));
@@ -33,7 +33,7 @@ const CourseForm = () => {
 
     return (
         <form className="course-form" onSubmit={handleSubmit}>
-            <h4>{courseToEdit ? "Edit" : "Create"} Course</h4>
+            <h4>{currentCourse ? "Edit" : "Create"} Course</h4>
 
             <div className="mb-3">
                 <label className="form-label">Title</label>
@@ -81,7 +81,7 @@ const CourseForm = () => {
                 />
             </div>
 
-            <button className="btn btn-primary">{courseToEdit ? "Update Course" : "Create Course"}</button>
+            <button className="btn btn-primary">{currentCourse ? "Update Course" : "Create Course"}</button>
         </form>
     )
 }

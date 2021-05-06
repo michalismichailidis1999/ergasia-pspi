@@ -5,7 +5,7 @@ import {changeFirstName, changeLastName, changeEmail, changePassword} from '../.
 
 const MyAccount = () => {
     const dispatch = useDispatch();    
-    const {user} = useSelector(state => state.user);
+    const {user, token} = useSelector(state => state.user);
     const {loading} = useSelector(state => state.form);
    
     const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ const MyAccount = () => {
 
         setCurrentEditedValue("password");
 
-        dispatch(changePassword(user.id, password, newPassword));
+        dispatch(changePassword(user.id, token, password, newPassword));
 
         setPassword("")
         setNewPassword("")
@@ -70,7 +70,7 @@ const MyAccount = () => {
                                 </div>
                                 <div className="mb-2">
                                     <button className="btn btn-primary update-btn" onClick={() => {
-                                        dispatch(changeFirstName(user.id, firstName));
+                                        dispatch(changeFirstName(user.id, token, firstName));
                                         setEditFirstName(false);
                                     }}>
                                         Update
@@ -117,7 +117,7 @@ const MyAccount = () => {
                                 </div>
                                 <div className="mb-2">
                                     <button disabled={loading} className="btn btn-primary update-btn" onClick={() => {
-                                        dispatch(changeLastName(user.id, lastName))
+                                        dispatch(changeLastName(user.id, token, lastName))
                                         setEditLastName(false);
                                     }}>
                                         Update {loading && <div className="spinner-border"></div>}
@@ -165,7 +165,7 @@ const MyAccount = () => {
                             </div>
                             <div className="mb-2">
                                 <button disabled={loading} className="btn btn-primary update-btn" onClick={() => {
-                                    dispatch(changeEmail(user.id, email))
+                                    dispatch(changeEmail(user.id, token, email))
                                     setEditEmail(false);
                                 }}>
                                     Update {loading && <div className="spinner-border"></div>}

@@ -10,6 +10,7 @@ import {
 
 const initialState = {
     user: null,
+    token: "",
     isAuthenticated: false
 }
 
@@ -22,9 +23,9 @@ const useReducer = (state=initialState, action) => {
         case LOAD_USER:
         case REGISTER:
         case LOGIN:
-            return {user: payload, isAuthenticated: true}
+            return {user: payload.user, token: payload.token, isAuthenticated: true}
         case LOG_OUT:
-            return {user: initialState.user, isAuthenticated: false}
+            return initialState;
         case CHANGE_FIRSTNAME:
             user.firstName = payload.firstName;
             return {...state, user};

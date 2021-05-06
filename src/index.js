@@ -4,7 +4,7 @@ import App from './App';
 import './style.css'
 import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
-import store from './store';
+import {store} from './config';
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 

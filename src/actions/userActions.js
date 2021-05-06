@@ -2,7 +2,6 @@ import {
     CHANGE_EMAIL, 
     CHANGE_FIRSTNAME, 
     CHANGE_LASTNAME, 
-    CHANGE_PASSWORD, 
     LOAD_USER, 
     LOGIN, 
     LOG_OUT, 
@@ -10,94 +9,56 @@ import {
 } from "../actionTypes/userActionTypes";
 import {toast} from 'react-toastify'
 import { loading, loadingCompleted } from "./formActions";
-import {userCreated} from '../actions/dummyDataActions'
+import {API} from '../config'
+import {getAxiosBody, getAxiosConfig} from '../helper'
 
-import store from '../store'
+import axios from "axios";
 
-export const register = (firstName, lastName, email, password, confirmPassword) => {
+export const register = (firstName, lastName, email, password) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true);
+            const body = getAxiosBody({firstName, lastName, email, password});
 
-        await setTimeout(() => {
-            try {
-                const user = users.find(user => user.email === email && user.password === password)
-    
-                if(user){
-                    toast.error("Email is already taken!")
-                }else{
-                    if(password !== confirmPassword){
-                        toast.error("Passwords do not match!")
-                    }else{
-                        const newUser = {
-                            id: users[users.length - 1].id + 1,
-                            firstName,
-                            lastName,
-                            email,
-                            password,
-                            photoURL: "/assets/images/user.png",
-                            role: "student"
-                        }
-    
-                        localStorage.setItem("user", JSON.stringify({
-                            id: newUser.id,
-                            firstName: newUser.firstName,
-                            lastName: newUser.lastName,
-                            email: newUser.email,
-                            photoURL: newUser.photoURL,
-                            role: "student"
-                        }));
-                        dispatch({type: REGISTER, payload: newUser})
-                        dispatch(userCreated(newUser))
-                    }
-                }
-            } catch (err) {
-                toast.error("Something went wrong! Please try again.");  
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1500)
+            const res = await axios.post(`${API}/register`, body, config);
+
+            dispatch({type: REGISTER, payload: res.data});
+
+            localStorage.setItem("user", JSON.stringify(res.data));
+
+            toast.success("Your registration completed successfully!")
+        } catch (err) {
+            console.log(err.response.data)
+            toast.error("Email is already taken!");  
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
 }
 
-export const login = (email, password, adminLogin=false) => {
+export const login = (email, password) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true);
+            const body = getAxiosBody({email, password});
 
-        await setTimeout(() => {
-            try {
-                const user = users.find(user => user.email === email && user.password === password)
-    
-                if(user){
-                    if(adminLogin){
-                        if(user.role !== "admin"){
-                            toast.error("Email or password is incorrect!")
-                            dispatch(loadingCompleted());
-                            return;
-                        }
-                    }
+            const res = await axios.post(`${API}/login`, body, config);
 
-                    localStorage.setItem("user", JSON.stringify({
-                        id: user.id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email,
-                        photoURL: user.photoURL,
-                        role: user.role
-                    }));
-                    dispatch({type: LOGIN, payload: user})
-                }else{
-                    toast.error("Email or password is incorrect!")
-                }
-            } catch (err) {
-                toast.error("Something went wrong! Please try again.");  
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1500)
+            dispatch({type: LOGIN, payload: res.data});
+
+            localStorage.setItem("user", JSON.stringify(res.data));
+
+            toast.success("You have logged in successfully!")
+        } catch (err) {
+            console.log(err.response.data)
+            toast.error("Email or password is incorrect!");  
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
 }
 
@@ -116,108 +77,105 @@ export const loadUser = () => {
     }
 }
 
-export const changeFirstName = (userId, firstName) => {
+export const changeFirstName = (userId, token, firstName) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true, token);
+            const body = JSON.stringify({firstName});
 
-        await setTimeout(() => {
-            try {
-                let user = users.find(user => user.id === userId);
-    
-                if(!user){
-                    toast.error("First name could't be updated");
-                }else{
-                    toast.success("Your first name updated successfully!")
-                    dispatch({type: CHANGE_FIRSTNAME, payload: {userId, firstName}})
-                }
-            } catch (err) {
-                toast.error("First name could't be updated");
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1000)
+            await axios.put(`${API}/user/first_name/${userId}`, body, config);
+
+            dispatch({type: CHANGE_FIRSTNAME, payload: {firstName}})
+
+            toast.success("Your first name updated successfully!")
+
+            let user = JSON.parse(localStorage.getItem("user"))
+
+            user.user.firstName = firstName;
+
+            localStorage.setItem("user", JSON.stringify(user));
+        } catch (err) {
+            console.log(err)
+            toast.error("First name could't be updated");
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
     
 }
 
-export const changeLastName = (userId, lastName) => {
+export const changeLastName = (userId, token, lastName) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true, token);
+            const body = JSON.stringify({lastName});
 
-        await setTimeout(() => {
-            try {
-                let user = users.find(user => user.id === userId);
-    
-                if(!user){
-                    toast.error("Last name could't be updated");
-                }else{
-                    toast.success("Your last name updated successfully!")
-                    dispatch({type: CHANGE_LASTNAME, payload: {userId, lastName}})
-                }
-            } catch (err) {
-                toast.error("Last name could't be updated");
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1000)
+            await axios.put(`${API}/user/last_name/${userId}`, body, config);
+
+            dispatch({type: CHANGE_LASTNAME, payload: {lastName}})
+
+            toast.success("Your last name updated successfully!")
+
+            let user = JSON.parse(localStorage.getItem("user"))
+
+            user.user.lastName = lastName;
+
+            localStorage.setItem("user", JSON.stringify(user));
+        } catch (err) {
+            toast.error("Last name could't be updated");
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
     
 }
 
-export const changeEmail = (userId, email) => {
+export const changeEmail = (userId, token, email) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true, token);
+            const body = JSON.stringify({email});
 
-        await setTimeout(() => {
-            try {
-                let user = users.find(user => user.id === userId);
-    
-                if(!user){
-                    toast.error("Email name could't be updated");
-                }else{
-                    toast.success("Your email name updated successfully!")
-                    dispatch({type: CHANGE_EMAIL, payload: {userId, email}})
-                }
-            } catch (err) {
-                toast.error("Email name could't be updated");
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1000)
+            await axios.put(`${API}/user/email/${userId}`, body, config);
+
+            dispatch({type: CHANGE_EMAIL, payload: {email}})
+
+            toast.success("Your email updated successfully!")
+
+            let user = JSON.parse(localStorage.getItem("user"))
+
+            user.user.email = email;
+
+            localStorage.setItem("user", JSON.stringify(user));
+        } catch (err) {
+            toast.error("Email could't be updated");
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
 }
 
-export const changePassword = (userId, password, newPassword) => {
+export const changePassword = (userId, token, password, newPassword) => {
     return async (dispatch) => {
-        const users = store.getState().dummyData.users
+        try {
+            dispatch(loading())
 
-        dispatch(loading())
+            const config = getAxiosConfig(true, token);
+            const body = JSON.stringify({password, newPassword});
 
-        await setTimeout(() => {
-            try {
-                let user = users.find(user => user.id === userId);
-    
-                if(!user){
-                    toast.error("Password name could't be updated");
-                }else{
-                    if(user.password !== password){
-                        toast.error("You didn't type correctly your password!");
-                    }else{
-                        toast.success("Your password name updated successfully!")
-                        dispatch({type: CHANGE_PASSWORD, payload: {userId, password: newPassword}})
-                    }
-                }
-            } catch (err) {
-                toast.error("Password name could't be updated");
-            }finally{
-                dispatch(loadingCompleted())
-            }
-        }, 1000)
+            await axios.put(`${API}/user/password/${userId}`, body, config);
+
+            toast.success("Your password updated successfully!")
+        } catch (err) {
+            toast.error(err.response.data.error);
+        }finally{
+            dispatch(loadingCompleted())
+        }
     }
 }

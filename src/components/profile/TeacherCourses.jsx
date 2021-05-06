@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedComponent } from '../../actions/adminActions';
-import { setCourseToEdit } from '../../actions/courseActions';
+import { setCurrentCourse } from '../../actions/courseActions';
 
 const TeacherCourses = () => {
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const TeacherCourses = () => {
                         <td>
                             <i className="fas fa-edit" onClick={() => {
                                 dispatch(setSelectedComponent("course-form"));
-                                dispatch(setCourseToEdit(course))
+                                dispatch(setCurrentCourse(course))
                             }}></i>
                         </td>
                     </tr>

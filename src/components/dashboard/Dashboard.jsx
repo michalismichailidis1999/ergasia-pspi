@@ -3,14 +3,19 @@ import "./style.css"
 import FilterCourses from './FilterCourses'
 import SearchCourse from './SearchCourse'
 import Courses from './Courses'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsInAdminArea } from '../../actions/adminActions'
+import { getCourses, getEnrolledCourses } from '../../actions/courseActions'
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
+    const {user, token} = useSelector(state => state.user) 
+
     useEffect(() => {
         dispatch(setIsInAdminArea(false));
+        dispatch(getEnrolledCourses(user.id, token))
+        dispatch(getCourses(user.id, token, "None", "all"))
     }, [])
 
     return (

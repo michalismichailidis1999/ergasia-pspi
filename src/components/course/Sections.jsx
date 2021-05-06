@@ -4,6 +4,7 @@ import Section from './Section'
 
 const Sections = () => {
     const {user} = useSelector(state => state.user);
+    const {currentCourseInfo} = useSelector(state => state.course);
 
     const [addSection, setAddSection] = useState(false);
     const [sectionTitle, setSectionTitle] = useState("")
@@ -16,7 +17,11 @@ const Sections = () => {
 
     return (
         <div className="course-sections">
-            <Section/>
+            {
+                currentCourseInfo.sections.map(section => (
+                    <Section key={section.id} section={section} />
+                ))
+            }
 
             {
                 user.role === "teacher" &&

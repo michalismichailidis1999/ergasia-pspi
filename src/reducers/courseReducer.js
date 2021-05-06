@@ -1,19 +1,20 @@
-import courses, {sections, lessons} from '../dummyData/courses'
+import courses from '../dummyData/courses'
 import {
     CREATE_COURSE, 
     ENROLL_TO_COURSE, 
-    FETCH_SECTIONS, 
-    FILTER_COURSES, 
     SEARCH_COURSE, 
-    SET_COURSE_TO_EDIT, 
     UNENROLL_FROM_COURSE, 
-    UPDATE_COURSE
+    UPDATE_COURSE,
+    GET_ENROLLED_COURSES,
+    GET_COURSES,
+    SET_CURRENT_COURSE,
+    FETCH_CURRENT_COURSE_INFO,
+    SET_CURRENT_LESSON
 } from '../actionTypes/courseActionTypes'
 
 const initialState = {
-    courses,
+    courses: [],
     enrolledCourses: [],
-    allCourses: courses,
     tableData: courses.map(course => {
         return {
             id: course.id,
@@ -23,16 +24,15 @@ const initialState = {
             rating: course.rating
         }
     }),
-    courseToEdit: null,
-    allSections: sections,
-    sections: [],
+    currentCourse: null,
+    currentCourseInfo: null,
+    currentLesson: null
 }
 
 const courseReducer = (state=initialState, action) => {
     const {type, payload} = action;
 
     const enrolledCourses = state.enrolledCourses
-    let allCourses = state.allCourses;
     let courses = state.courses;
 
     switch(type){
@@ -41,23 +41,25 @@ const courseReducer = (state=initialState, action) => {
             return {...state, enrolledCourses}
         case UNENROLL_FROM_COURSE:
             return {...state, enrolledCourses: state.enrolledCourses.filter(course => course.id !== payload)};
-        case FILTER_COURSES:
-            return {...state, courses: payload}
         case SEARCH_COURSE:
-            let course = state.allCourses.find(course => course.title === payload)
+            let course = state.courses.find(course => course.title === payload)
             return {...state, courses: course ? [course] : []}
         case CREATE_COURSE:
-            allCourses.push({id: allCourses[courses.length - 1].id + 1,...payload})
             courses.push({id: courses[courses.length - 1].id + 1,...payload})
-            return {...state, allCourses, courses}
+            return {...state, courses}
         case UPDATE_COURSE:
-            allCourses = allCourses.map(course => course.id === payload.id ? payload : course);
             courses = courses.map(course => course.id === payload.id ? payload : course);
             return {...state, courses}
-        case SET_COURSE_TO_EDIT:
-            return {...state, courseToEdit: payload}
-        case FETCH_SECTIONS:
-            return {...state, sections: payload}
+        case SET_CURRENT_COURSE:
+            return {...state, currentCourse: payload}
+        case GET_COURSES:
+            return {...state, courses: payload.courses}
+        case GET_ENROLLED_COURSES:
+            return {...state, enrolledCourses: payload.enrolledCourses}
+        case FETCH_CURRENT_COURSE_INFO:
+            return {...state, currentCourseInfo: payload.currentCourseInfo}
+        case SET_CURRENT_LESSON:
+            return {...state, currentLesson: payload}
         default:
             return state;
     }

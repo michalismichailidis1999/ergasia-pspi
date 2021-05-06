@@ -5,7 +5,7 @@ import { searchCourse } from '../../actions/courseActions';
 const SearchCourse = () => {
     const dispatch = useDispatch();
 
-    const {allCourses} = useSelector(state => state.course);
+    const {courses} = useSelector(state => state.course);
 
     const [title, setTitle] = useState("")
     const [matches, setMatches] = useState([]);
@@ -19,10 +19,10 @@ const SearchCourse = () => {
 
         let currentMatches = [];
         if(currentSearch.length > 0){
-            for(let i = 0; i < allCourses.length; i++){
+            for(let i = 0; i < courses.length; i++){
                 let regex = new RegExp("^"+currentSearch+".", "i");
                 
-                let match = allCourses[i].title.match(regex);
+                let match = courses[i].title.match(regex);
 
                 if(match){
                     currentMatches.push(match)

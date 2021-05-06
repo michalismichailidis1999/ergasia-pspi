@@ -4,7 +4,7 @@ import {
     courseTableHeaders,
     categoryTableHeaders,
 } from '../dummyData/table'
-import store from '../store'
+import {store} from '../config'
 
 export const setIsInAdminArea = (value) => {
     return {type: SET_IS_IN_ADMIN_AREA, payload: value}

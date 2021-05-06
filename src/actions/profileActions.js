@@ -5,11 +5,7 @@ import {
     courseTableHeaders,
     
 } from '../dummyData/table'
-import store from '../store'
-
-
-
-
+import {store} from '../config'
 
 export const setSelectedComponent = (selected) => {
     return {type: SET_SELECTED_COMPONENT, payload: selected}

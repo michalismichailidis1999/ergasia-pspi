@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector} from 'react-redux';
+import { useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom'
-import { setIsInAdminArea } from '../../actions/adminActions';
-import { loadUser } from '../../actions/userActions';
 import './style.css'
 
 const Layout = () => {
-    const dispatch = useDispatch();
     const history = useHistory();
 
     const {isAuthenticated} = useSelector(state => state.user)
-
-    useEffect(() => {
-        dispatch(setIsInAdminArea(false));
-    }, [])
 
     useEffect(() => {
         if(isAuthenticated){

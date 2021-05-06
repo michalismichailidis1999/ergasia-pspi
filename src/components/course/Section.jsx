@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import CreateLesson from './CreateLesson';
+import {setCurrentLesson} from '../../actions/courseActions'
 
-const Section = () => {
+const Section = ({section}) => {
+    const dispatch = useDispatch();
+
     const {user} = useSelector(state => state.user);
 
     const [addLesson, setAddLesson] = useState(false);
@@ -13,48 +16,30 @@ const Section = () => {
         let confirm = window.confirm("Are you sure that you want to delete this lesson?");
 
         if(confirm){
-            toast.success("Course deleted successfully");
+            toast.success("Section deleted successfully");
         }
     }
 
     return (
         <div className="course-section">
-            <h3>Section 1</h3>
+            <h3>{section.title}</h3>
 
             <ul>
-                <li>
-                    <Link to="/lesson/1">Introduction to Linear Algebra</Link>
-                    {user.role === "student" && <input type="checkbox" className="form-check-input"/>}
-                    {
-                        user.role === "teacher" &&
-                        <span onClick={() => handleDelete()}>
-                            <i className="fas fa-trash"></i>
-                        </span>
-                    }
-                </li>
-
-                <li>
-                    <Link to="/lesson/1">Introduction to Linear Algebra 2</Link>
-                    {user.role === "student" && <input type="checkbox" className="form-check-input"/>}
-                    {
-                        user.role === "teacher" &&
-                        <span onClick={() => handleDelete()}>
-                            <i className="fas fa-trash"></i>
-                        </span>
-                    }
-                </li>
-
-                <li>
-                    <Link to="/lesson/1">Introduction to Linear Algebra 3</Link>
-                    {user.role === "student" && <input type="checkbox" className="form-check-input"/>}
-                    {
-                        user.role === "teacher" &&
-                        <span onClick={() => handleDelete()}>
-                            <i className="fas fa-trash"></i>
-                        </span>
-                    }
-                </li>
-
+                {
+                    section.lessons.map(lesson => (
+                        <li key={lesson.id}>
+                            <Link to={`/lesson/${lesson.id}`} onClick={() => dispatch(setCurrentLesson(lesson))}>{lesson.title}</Link>
+                            {user.role === "student" && <input type="checkbox" className="form-check-input"/>}
+                            {
+                                user.role === "teacher" &&
+                                <span onClick={() => handleDelete()}>
+                                    <i className="fas fa-trash"></i>
+                                </span>
+                            }
+                        </li>
+                    ))
+                }
+                
                 {
                     user.role === "teacher" &&
                     <React.Fragment>

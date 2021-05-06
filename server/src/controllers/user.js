@@ -89,17 +89,31 @@ const updatePassword = async (req, res) => {
             return res.status(400).json({errors: errors.array()})
         }
 
-        const {password} = req.body;
+        const {password, newPassword} = req.body;
 
-        const salt = await bcrypt.genSalt(10);
-        const encryptedPassword = await bcrypt.hash(password, salt);
+        let query = `SELECT password FROM users WHERE email='${req.user.email}'`;
 
-        let query = `UPDATE users SET password='${encryptedPassword}' WHERE id=${req.user.id}`;
-
-        db.query(query, (err) => {
+        db.query(query, async (err, result) => {
             if(err) throw err;
 
-            res.json({message: "Password updated successfully!"});
+            let oldPassword = result[0].password;
+
+            let isMatch = await bcrypt.compare(password, oldPassword);
+
+            if(!isMatch){
+                return res.status(400).json({error: "You didn't type correctly you password!"});
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            const encryptedPassword = await bcrypt.hash(newPassword, salt);
+    
+            query = `UPDATE users SET password='${encryptedPassword}' WHERE id=${req.user.id}`;
+    
+            db.query(query, (err) => {
+                if(err) throw err;
+    
+                res.json({message: "Password updated successfully!"});
+            })
         })
     } catch (err) {
         console.log(err);

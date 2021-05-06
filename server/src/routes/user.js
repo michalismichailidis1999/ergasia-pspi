@@ -22,7 +22,8 @@ router.put("/user/email/:userId", [
 
 router.put("/user/password/:userId", [
     check("password", "Password is required").notEmpty(),
-    check("password", "Password must be at least 6 characters").isLength({min: 6})
+    check("newPassword", "New password is required").notEmpty(),
+    check("newPassword", "New Password must be at least 6 characters").isLength({min: 6})
 ], requireLogin, isAuthorized, updatePassword);
 
 router.put("/user/photo/:userId", [

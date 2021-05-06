@@ -12,19 +12,10 @@ import PrivateRoute from './PrivateRoute'
 import AdminRoute from './AdminRoute'
 import AdminDashboard from '../admin/Dashboard'
 import AdminLogin from '../admin/Login'
-import { useSelector } from 'react-redux';
 import Course from '../course/Course';
 import Lesson from '../course/Lesson';
 
 const Routes = () => {
-    const {user} = useSelector(state => state.user)
-
-    useEffect(() => {
-        if(user){
-            console.log(user.role)
-        }
-    }, [user])
-
     return (
         <Switch>
             <Route exact path="/" component={Layout}/>

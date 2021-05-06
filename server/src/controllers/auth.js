@@ -44,7 +44,7 @@ const register = (req, res) => {
             db.query(query, (err) => {
                 if(err) throw err;
 
-                query = `SELECT id, first_name, last_name, email FROM users WHERE email='${email}'`;
+                query = `SELECT id, first_name, last_name, email, photoURL, role FROM users WHERE email='${email}'`;
 
                 db.query(query, (err, result) => {
                     if(err) throw err;
@@ -61,7 +61,7 @@ const register = (req, res) => {
                     jwt.sign(payload, jwtSecret, (err, token) => {
                         if(err) throw err;
 
-                        res.json({user: payload, token})
+                        res.json({user: {...payload, photoURL: user.photoURL, role: user.role}, token})
                     })
                 })
             })
@@ -85,7 +85,7 @@ const login = (req, res) => {
             password
         } = req.body
 
-        let query = `SELECT id, first_name, last_name, email, password FROM users WHERE email='${email}'`;
+        let query = `SELECT id, first_name, last_name, email, password, photoURL, role FROM users WHERE email='${email}'`;
 
         db.query(query, async (err, result) => {
             if(err) throw err;
@@ -112,7 +112,7 @@ const login = (req, res) => {
             jwt.sign(payload, jwtSecret, (err, token) => {
                 if(err) throw err;
 
-                res.json({user: payload, token})
+                res.json({user: {...payload, photoURL: user.photoURL, role: user.role}, token})
             })
         })
     } catch (err) {

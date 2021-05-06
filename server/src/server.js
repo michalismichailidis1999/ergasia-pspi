@@ -1,12 +1,14 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const db = require("./config/db")
+const cors = require('cors')
 
 dotenv.config();
 
 // Route Imports
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
+const courseRoutes = require("./routes/course")
 
 const app = express();
 
@@ -21,10 +23,12 @@ db.connect((err) => {
 // Middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
 // Routes
 app.use("/api", authRoutes)
 app.use("/api", userRoutes)
+app.use("/api", courseRoutes)
 
 const PORT = parseInt(process.env.PORT)
 

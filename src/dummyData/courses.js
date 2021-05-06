@@ -7,7 +7,7 @@ const courses = [
         category: "Maths",
         enrolls: 100,
         rating: 4.5,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 90,
         rating: 4,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 3,
@@ -27,7 +27,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 80,
         rating: 3.3,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 4,
@@ -37,7 +37,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 70,
         rating: 5,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 5,
@@ -47,7 +47,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 140,
         rating: 5,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 6,
@@ -57,7 +57,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 250,
         rating: 2,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 7,
@@ -67,7 +67,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 400,
         rating: 2.5,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 8,
@@ -77,7 +77,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 40,
         rating: 4.5,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 9,
@@ -87,7 +87,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 430,
         rating: 4,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 10,
@@ -97,7 +97,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 180,
         rating: 3.1,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 11,
@@ -107,7 +107,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 210,
         rating: 4.8,
-        teacherId: 1
+        teacherId: 2
     },
     {
         id: 12,
@@ -117,7 +117,7 @@ const courses = [
         category: "Computer Science",
         enrolls: 135,
         rating: 5,
-        teacherId: 1
+        teacherId: 2
     },
 ]
 

@@ -3,6 +3,7 @@ import {Link, useHistory } from 'react-router-dom'
 import "./style.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../actions/userActions';
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -20,7 +21,12 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(register(firstName, lastName, email, password, confirmPassword))
+        if(password !== confirmPassword){
+            toast.error("Passwords do not match!")
+            return;
+        }
+
+        dispatch(register(firstName, lastName, email, password))
     }
 
     useEffect(() => {

@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {enrollToCourse, unenrollFromCourse} from '../../actions/courseActions'
+import {enrollToCourse, setCurrentCourse, unenrollFromCourse} from '../../actions/courseActions'
 
 const Course = ({course}) => {
     const dispatch = useDispatch();
     const {enrolledCourses} = useSelector(state => state.course)
-    const {user} = useSelector(state => state.user)
+    const {user, token} = useSelector(state => state.user)
 
     const [isEnrolled, setIsEnrolled] = useState(enrolledCourses.find(c => c.id === course.id));
 
+    useEffect(() => {
+        setIsEnrolled(enrolledCourses.find(c => c.id === course.id))
+    }, [enrolledCourses])
+
     return (
         <div className={!isEnrolled ? "course" : "course enrolled"}>
-            <Link to={`/course/${course.id}`}>
-                <img src={course.imgSrc} alt="Linear Algebra"/>
+            <Link to={`/course/${course.id}`} onClick={() => dispatch(setCurrentCourse(course))}>
+                <img src={course.photoURL} alt="Linear Algebra"/>
             </Link>
 
             <div className="course-body">
@@ -28,9 +32,9 @@ const Course = ({course}) => {
                         }
 
                         if(isEnrolled){
-                            dispatch(unenrollFromCourse(course.id))
+                            dispatch(unenrollFromCourse(user.id, token, course.id))
                         }else{
-                            dispatch(enrollToCourse(course))
+                            dispatch(enrollToCourse(user.id, token, course))
                         }
 
                         setIsEnrolled(!isEnrolled);
