@@ -76,4 +76,17 @@ const isAdmin = (req, res, next) => {
     }
 }
 
-module.exports = {userById, requireLogin, isAuthorized, isAdmin}
+const isTeacher = (req, res, next) => {
+    try {
+        if(req.user.role !== 'teacher'){
+            return res.status(401).json({error: "User not authorized."});
+        }
+
+        next()
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({error: err.message});
+    }
+}
+
+module.exports = {userById, requireLogin, isAuthorized, isAdmin, isTeacher}

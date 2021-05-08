@@ -1,35 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedComponent } from '../../actions/adminActions';
 import {createCourse, updateCourse} from '../../actions/courseActions'
 
 const CourseForm = () => {
     const dispatch = useDispatch();
 
-    const {user} = useSelector(state => state.user);
+    const {user, token} = useSelector(state => state.user);
     const {categories} = useSelector(state => state.category);
     const {currentCourse} = useSelector(state => state.course);
 
     const [title, setTitle] = useState(currentCourse ? currentCourse.title : "")
-    const [category, setCategory] = useState(currentCourse ? currentCourse.title : categories[0].title)
+    const [categoryId, setCategoryId] = 
+        useState(currentCourse ? categories.find(category => category.id === currentCourse.category_id).id : categories[0].id)
     const [description, setDescription] = useState(currentCourse ? currentCourse.description : "")
-    const [imgSrc, setImgSrc] = useState(currentCourse ? currentCourse.imgSrc : "");
+    const [photoURL, setPhotoURL] = useState(currentCourse ? currentCourse.photoURL : "");
+    const [file, setFile] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(currentCourse){
-            if(imgSrc !== ""){
-                dispatch(updateCourse({...currentCourse, title, description, category}));
-            }else{
-                dispatch(updateCourse({...currentCourse, title, description, category, imgSrc}));
-            }
-        }else{
-            dispatch(createCourse({title, category, description, imgSrc, teacherId: user.id}));
-        }
+        const formData = new FormData();
 
-        dispatch(setSelectedComponent("courses"))
+        formData.set("title", title)
+        formData.set("category_id", categoryId);
+        formData.set("description", description);
+        formData.set("file", file);
+
+        if(currentCourse){
+            if(!file){
+                formData.delete("file");
+            }
+
+            dispatch(updateCourse(user.id, token, currentCourse.id, formData));
+        }else{
+            dispatch(createCourse(user.id, token, formData))
+        }
     }
+
+    const handleFileChange = (e) => {
+        setPhotoURL(URL.createObjectURL(e.target.files[0]))
+        setFile(e.target.files[0]);
+    }
+
+    useEffect(() => {
+        setPhotoURL(currentCourse ? currentCourse.photoURL : "")
+    }, [currentCourse])
 
     return (
         <form className="course-form" onSubmit={handleSubmit}>
@@ -51,11 +66,11 @@ const CourseForm = () => {
                 <label className="form-label">Category</label>
                 <select 
                     className="form-select"
-                    value={category}
-                    onChange={e => setCategory(e.target.value)}
+                    value={categoryId}
+                    onChange={e => setCategoryId(parseInt(e.target.value))}
                 >
-                    {categories.map((category, i) => (
-                        <option key={i + (Date.now() * Math.random() + "")} value={category.title} >{category.title}</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id} >{category.title}</option>
                     ))}
                 </select>
             </div>
@@ -77,9 +92,16 @@ const CourseForm = () => {
                     type="file" 
                     className="form-control" 
                     placeholder="Course image..."
-                    onChange={e => setImgSrc("/assets/images/courseToCreate/" + e.target.files[0].name)}
+                    onChange={handleFileChange}
                 />
             </div>
+
+            {
+                photoURL !== "" &&
+                <div className="img-preview">
+                    <img src={photoURL} alt="Course" />
+                </div>
+            }
 
             <button className="btn btn-primary">{currentCourse ? "Update Course" : "Create Course"}</button>
         </form>

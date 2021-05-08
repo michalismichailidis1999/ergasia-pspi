@@ -1,8 +1,8 @@
-import { EDIT_CATEGORY, CREATE_CATEGORY, DELETE_CATEGORY, SET_CATEGORY_TO_EDIT } from '../actionTypes/categoryActionTypes';
+import { EDIT_CATEGORY, CREATE_CATEGORY, DELETE_CATEGORY, SET_CATEGORY_TO_EDIT, FETCH_CATEGORIES } from '../actionTypes/categoryActionTypes';
 import categories from '../dummyData/categories'
 
 const initialState = {
-    categories,
+    categories: [],
     categoryToEdit: null,
     tableData: categories.map(category => {
         return {
@@ -32,6 +32,8 @@ const categoryReducer = (state=initialState, {type, payload}) => {
             return {...state, categories, tableData}
         case SET_CATEGORY_TO_EDIT:
             return {...state, categoryToEdit: payload}
+        case FETCH_CATEGORIES:
+            return {...state, categories: payload.categories}
         default:
             return state
     }

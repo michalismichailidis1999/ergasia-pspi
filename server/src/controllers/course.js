@@ -1,6 +1,7 @@
 const db = require("../config/db");
 const {validationResult} = require("express-validator")
 const {getAsyncData} = require("../helper")
+const path = require("path");
 
 const getCourses = (req, res) => {
     try {
@@ -166,4 +167,103 @@ const fetchCourseInfo = (req, res) => {
     }
 }
 
-module.exports = {getCourses, getEnrolledCourses, enrollToCourse, unenrollFromCourse, fetchCourseInfo}
+const createCourse = (req, res) => {
+    try {
+        const file = req.files.file;
+        const title = req.body.title;
+        const description = req.body.description;
+        const category_id = parseInt(req.body.category_id);
+
+        if(!file || !title || !description || !category_id){
+            return res.status(400).json({error: "Please fill in all fields!"})
+        }
+
+        file.mv(path.join(__dirname, "..", "..", "..", "public", "assets", "images", file.name), (err) => {
+            if(err) throw err;
+
+            let query = `
+                INSERT INTO courses(title, photoURL, description, category_id, teacher_id)
+                VALUES('${title}', '/assets/images/${file.name}', '${description}', ${category_id}, ${req.user.id})
+            `
+
+            db.query(query, (err) => {
+                if(err) throw err;
+
+                res.json({message: "Course created successfully!"});
+            })
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: err.message});
+    }
+}
+
+const updateCourse = (req, res) => {
+    try {
+        const title = req.body.title;
+        const description = req.body.description;
+        const category_id = parseInt(req.body.category_id);
+
+        if(!title || !description || !category_id){
+            return res.status(400).json({error: "Please fill in all fields!"})
+        }
+
+        if(req.files){
+            const file = req.files.file;
+            let query = `
+                UPDATE courses SET title='${title}', photoURL='/assets/images/${file.name}', 
+                description='${description}', category_id=${category_id} WHERE id=${req.course.id}
+            `
+
+            file.mv(path.join(__dirname, "..", "..", "..", "public", "assets", "images", file.name), (err) => {
+                if(err) throw err;
+    
+                db.query(query, (err) => {
+                    if(err) throw err;
+    
+                    res.json({message: "Course updated successfully!"});
+                })
+            })
+        }else{
+            let query = `
+                UPDATE courses SET title='${title}', description='${description}', 
+                category_id=${category_id} WHERE id=${req.course.id}
+            `
+
+            db.query(query, (err) => {
+                if(err) throw err;
+
+                res.json({message: "Course updated successfully!"});
+            })
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: err.message});
+    }
+}
+
+const getTeacherCourses = (req, res) => {
+    try {
+        let query = `SELECT * FROM courses WHERE teacher_id=${req.user.id}`;
+
+        db.query(query, (err, result) => {
+            if(err) throw err;
+
+            res.json(result)
+        })
+    } catch (err) {
+        console.log(err)
+        res.status({error: err.message});
+    }
+}
+
+module.exports = {
+    getCourses, 
+    getEnrolledCourses, 
+    enrollToCourse, 
+    unenrollFromCourse, 
+    fetchCourseInfo, 
+    createCourse, 
+    updateCourse, 
+    getTeacherCourses
+}

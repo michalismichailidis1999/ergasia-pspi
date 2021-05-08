@@ -1,7 +1,16 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { getCourses, getEnrolledCourses, enrollToCourse, unenrollFromCourse, fetchCourseInfo } = require("../controllers/course")
-const { userById, requireLogin, isAuthorized } = require("../middlewares/user")
+const { 
+    getCourses, 
+    getEnrolledCourses, 
+    enrollToCourse, 
+    unenrollFromCourse, 
+    fetchCourseInfo, 
+    createCourse, 
+    updateCourse, 
+    getTeacherCourses
+} = require("../controllers/course")
+const { userById, requireLogin, isAuthorized, isTeacher } = require("../middlewares/user")
 const { courseById } = require("../middlewares/course")
 
 const router = express.Router()
@@ -20,6 +29,12 @@ router.post("/courses/:courseId/enroll/:userId", requireLogin, isAuthorized, enr
 router.delete("/courses/:courseId/unenroll/:userId", requireLogin, isAuthorized, unenrollFromCourse);
 
 router.get("/courses/:courseId/info/:userId", requireLogin, isAuthorized, fetchCourseInfo)
+
+router.post("/courses/create_course/:userId", requireLogin, isAuthorized, isTeacher, createCourse);
+
+router.put("/courses/:courseId/update_course/:userId", requireLogin, isAuthorized, isTeacher, updateCourse);
+
+router.get("/courses/teacher/:userId", requireLogin, isAuthorized, isTeacher, getTeacherCourses);
 
 router.param("userId", userById)
 router.param("courseId", courseById)

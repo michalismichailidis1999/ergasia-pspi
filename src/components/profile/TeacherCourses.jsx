@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedComponent } from '../../actions/adminActions';
-import { setCurrentCourse } from '../../actions/courseActions';
+import { getTeacherCourses, setCurrentCourse } from '../../actions/courseActions';
 
 const TeacherCourses = () => {
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.user);
+    const {user, token} = useSelector(state => state.user);
     const {courses} = useSelector(state => state.course);
 
-    const currentTeacherCourses = courses.filter(course => course.teacherId === user.id);
+    useEffect(() => {
+        dispatch(getTeacherCourses(user.id, token));
+    }, [])
 
     return (
         <table className="table table-striped">
@@ -21,7 +23,7 @@ const TeacherCourses = () => {
             </thead>
 
             <tbody>
-                {currentTeacherCourses.map(course => (
+                {courses.map(course => (
                     <tr key={course.id}>
                         <td>{course.id}</td>
                         <td>{course.title}</td>

@@ -6,6 +6,7 @@ import Courses from './Courses'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsInAdminArea } from '../../actions/adminActions'
 import { getCourses, getEnrolledCourses } from '../../actions/courseActions'
+import { fetchCategories } from '../../actions/categoryActions'
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(setIsInAdminArea(false));
+        dispatch(fetchCategories(user.id, token))
         dispatch(getEnrolledCourses(user.id, token))
         dispatch(getCourses(user.id, token, "None", "all"))
     }, [])

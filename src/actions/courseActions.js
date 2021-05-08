@@ -14,6 +14,7 @@ import {
 } from "../actionTypes/courseActionTypes"
 import {API} from '../config'
 import {getAxiosBody, getAxiosConfig} from '../helper'
+import {setSelectedComponent} from './adminActions'
 
 export const enrollToCourse = (userId, token, course) => {
     return async (dispatch) => {
@@ -77,12 +78,42 @@ export const searchCourse = (title) => {
     return {type: SEARCH_COURSE, payload: title};
 }
 
-export const createCourse = (course) => {
-    return {type: CREATE_COURSE, payload: {...course, rating: 0, enrolls: 0}};
+export const createCourse = (userId, token, formData) => {
+    return async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            await axios.post(`${API}/courses/create_course/${userId}`, formData, config);
+            
+            dispatch(setSelectedComponent("courses"));
+        } catch (err) {
+            toast.error("Course couldn't be created");
+        }
+    }
 }
 
-export const updateCourse = (course) => {
-    return {type: UPDATE_COURSE, payload: course};
+export const updateCourse = (userId, token, courseId, formData) => {
+    return async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            await axios.put(`${API}/courses/${courseId}/update_course/${userId}`, formData, config);
+            
+            dispatch(setSelectedComponent("courses"));
+        } catch (err) {
+            toast.error("Course couldn't be updated");
+        }
+    }
 }
 
 export const setCurrentCourse = (course) => {
@@ -105,4 +136,18 @@ export const fetchCurrentCourseInfo = (userId, token, courseId) => {
 
 export const setCurrentLesson = (lesson) => {
     return {type: SET_CURRENT_LESSON, payload: lesson}
+}
+
+export const getTeacherCourses = (userId, token) => {
+    return async (dispatch) => {
+        try {
+            const config = getAxiosConfig(false, token);
+
+            const res = await axios.get(`${API}/courses/teacher/${userId}`, config);
+
+            dispatch({type: GET_COURSES, payload: {courses: res.data}});
+        } catch (err) {
+            toast.error("Courses couldn't be fetched");
+        }
+    }
 }

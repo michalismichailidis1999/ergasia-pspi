@@ -4,6 +4,7 @@ import { logOut } from '../../actions/userActions';
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedComponent } from '../../actions/profileActions'
+import { setCurrentCourse } from '../../actions/courseActions';
 
 const LeftComponent = () => {
     const dispatch = useDispatch()
@@ -33,6 +34,7 @@ const LeftComponent = () => {
                         <>
                             <li 
                                 onClick={() => {
+                                    dispatch(setCurrentCourse(null))
                                     dispatch(setSelectedComponent("course-form"))
                                 }}
                             >

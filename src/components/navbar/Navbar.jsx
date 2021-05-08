@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedLinks, links } from './links';
 import { logOut } from '../../actions/userActions';
 import { setSelectedComponent } from '../../actions/profileActions';
+import { setCurrentCourse } from '../../actions/courseActions';
 
 const Navbar = () => {
 
@@ -67,6 +68,7 @@ const Navbar = () => {
                                                         to="/profile" 
                                                         onClick={() => {
                                                             setShowDropmenu(false)
+                                                            dispatch(setCurrentCourse(null))
                                                             dispatch(setSelectedComponent("course-form"));
                                                         }}
                                                     >
