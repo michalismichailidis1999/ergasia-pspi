@@ -11,7 +11,6 @@ import {toast} from 'react-toastify'
 import { loading, loadingCompleted } from "./formActions";
 import {API} from '../config'
 import {getAxiosBody, getAxiosConfig} from '../helper'
-
 import axios from "axios";
 
 export const register = (firstName, lastName, email, password) => {

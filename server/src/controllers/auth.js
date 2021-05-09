@@ -35,7 +35,7 @@ const register = (req, res) => {
             const salt = await bcrypt.genSalt(10)
 
             const encryptedPassword = await bcrypt.hash(password, salt)
-
+            
             query = `
                 INSERT INTO users(first_name, last_name, email, password) 
                 VALUES('${firstName}', '${lastName}', '${email}', '${encryptedPassword}')
