@@ -134,9 +134,9 @@ INSERT INTO lessons(title, pdfURL, section_id) VALUES('Introduction to Linear Al
 INSERT INTO lessons(title, pdfURL, section_id) VALUES('Introduction to Linear Algebra 6', '/assets/pdfs/linear-algebra-course.pdf', 2);
 
 -- ENROLLMENT INSERTIONS
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 26);
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 27);
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 28);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 1);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 2);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 3);
 
 -- UPDATE SOME ROLES
 UPDATE users SET role='teacher' WHERE email='john@gmail.com';
