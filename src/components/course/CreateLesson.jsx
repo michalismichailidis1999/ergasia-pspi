@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify'
+import { createLesson } from '../../actions/courseActions';
 
-const CreateLesson = ({setAddLesson}) => {
+const CreateLesson = ({setAddLesson, sectionId}) => {
+    const dispatch = useDispatch();
+
+    const {user, token} = useSelector(state => state.user);
+
+    const [lessonTitle, setLessonTitle] = useState("");
+    const [file, setFile] = useState(null)
+
     const handleSubmit = e => {
         e.preventDefault()
 
-        toast.success("Lesson created successfully!")
+        const formData = new FormData();
+
+        formData.set("title", lessonTitle);
+        formData.set("file", file);
+
+        dispatch(createLesson(user.id, token, sectionId, formData));
 
         setAddLesson(false)
     }
@@ -24,12 +38,23 @@ const CreateLesson = ({setAddLesson}) => {
                         <div className="modal-body">
                             <div className="mb-3">
                                 <label className="form-label">Lesson Title</label>
-                                <input type="text" className="form-control"/>
+                                <input 
+                                    type="text" 
+                                    className="form-control"
+                                    value={lessonTitle}
+                                    required={true}
+                                    onChange={e => setLessonTitle(e.target.value)} 
+                                />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">PDF</label>
-                                <input type="file" className="form-control"/>
+                                <input 
+                                    type="file" 
+                                    className="form-control"
+                                    required={true}
+                                    onChange={e => setFile(e.target.files[0])}
+                                />
                             </div>
                         </div>
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const {check} = require("express-validator");
-const { updateFirstName, updateLastName, updateEmail, updatePassword, updatePhoto } = require("../controllers/user")
-const {userById, requireLogin, isAuthorized} = require("../middlewares/user")
+const { updateFirstName, updateLastName, updateEmail, updatePassword, updatePhoto, getUsers, updateUserRole } = require("../controllers/user")
+const {userById, requireLogin, isAuthorized, isAdmin} = require("../middlewares/user")
 
 const router = express.Router()
 
@@ -26,9 +26,11 @@ router.put("/user/password/:userId", [
     check("newPassword", "New Password must be at least 6 characters").isLength({min: 6})
 ], requireLogin, isAuthorized, updatePassword);
 
-router.put("/user/photo/:userId", [
-    check("photoURL", "Photo URL is required").notEmpty()
-], requireLogin, isAuthorized, updatePhoto);
+router.put("/user/photo/:userId", requireLogin, isAuthorized, updatePhoto);
+
+router.get("/users/:userId", requireLogin, isAuthorized, isAdmin, getUsers);
+
+router.put("/user/:userToUpdateId/update_role/:userId", requireLogin, isAuthorized, isAdmin, updateUserRole);
 
 router.param("userId", userById)
 

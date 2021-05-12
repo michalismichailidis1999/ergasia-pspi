@@ -2,6 +2,7 @@ import {
     CHANGE_EMAIL, 
     CHANGE_FIRSTNAME, 
     CHANGE_LASTNAME, 
+    CHANGE_PHOTO, 
     LOAD_USER, 
     LOGIN, 
     LOG_OUT, 
@@ -34,6 +35,9 @@ const useReducer = (state=initialState, action) => {
             return {...state, user};
         case CHANGE_EMAIL:
             user.email = payload.email;
+            return {...state, user}
+        case CHANGE_PHOTO:
+            user.photoURL = payload.photoURL;
             return {...state, user}
         default:
             return state;

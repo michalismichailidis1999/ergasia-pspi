@@ -121,4 +121,57 @@ const login = (req, res) => {
     }
 }
 
-module.exports = {register, login}
+const adminLogin = (req, res) => {
+    try {
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+
+        const {
+            email,
+            password
+        } = req.body
+
+        let query = `SELECT id, first_name, last_name, email, password, photoURL, role FROM users WHERE email='${email}'`;
+
+        db.query(query, async (err, result) => {
+            if(err) throw err;
+
+            if(result.length === 0){
+                return res.status(404).json({error: "User not found"});
+            }
+
+            let user = result[0];
+
+            if(user.role !== "admin"){
+                return res.status(401).json({error: "User not authorized!"})
+            }
+
+            const isMatch = await bcrypt.compare(password, user.password);
+
+            if(!isMatch){
+                return res.status(400).json({error: "Email or password is wrong!"});
+            }
+
+            const payload = {
+                id: user.id,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email
+            }
+
+            jwt.sign(payload, jwtSecret, (err, token) => {
+                if(err) throw err;
+
+                res.json({user: {...payload, photoURL: user.photoURL, role: user.role}, token})
+            })
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: err.message});
+    }
+}
+
+module.exports = {register, login, adminLogin}

@@ -102,6 +102,25 @@
     margin-bottom: 20px;
 }
 
+.course-section .section-title{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.course-section .section-title h3{
+    margin-bottom: 0;
+}
+
+.course-section .section-title i{
+    margin-left: 30px;
+}
+
+.course-section .section-title i:hover{
+    color: var(--bs-danger);
+    cursor: pointer;
+}
+
 .course-section input[type="checkbox"]{
     margin-left: 10px;
     margin-top: 0;
@@ -137,6 +156,24 @@
 
 .course-section ul li span:hover{
     color: var(--bs-danger);
+}
+
+.rate-course-btn{
+    background: var(--bs-primary) !important;
+    min-width: fit-content !important;
+    max-width:  fit-content !important;
+    padding: 5px 20px !important;
+    margin: 0 !important;
+    font-weight: 300;
+}
+
+.rate-course-btn:hover{
+    background: var(--bs-info) !important;
+}
+
+.labeled-group .btn-secondary{
+    width: fit-content;
+    margin-top: 30px;
 }
 
 /* End of course sections */

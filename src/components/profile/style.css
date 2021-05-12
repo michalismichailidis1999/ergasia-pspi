@@ -95,6 +95,13 @@ Right Component
   margin-left: 10px;
 }
 
+.infos li img{
+  width: 50%;
+  max-width: 250px;
+  height: auto;
+  margin-right: 10px;
+}
+
 .pass{
   font-weight: 500 !important;
 }
@@ -129,6 +136,34 @@ Right Component
 
 .rightComponent .contact-form > div{
   margin-bottom: 15px;
+}
+
+.progress-list{
+  margin-top: 20px;
+  padding-left: 0;
+}
+
+.progress-list .course-link{
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.progress-list .course-link:hover{
+  text-decoration: underline;
+}
+
+.progress-list li i{
+  margin-left: 5px;
+  font-size: 1.3rem;
+}
+
+.progress-list li i.fa-check-circle{
+  color: var(--bs-teal);
+}
+
+.progress-list li i.fa-times-circle{
+  color: var(--bs-danger);
 }
 
 /*

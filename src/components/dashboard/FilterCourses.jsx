@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses } from '../../actions/courseActions';
-import categories from '../../dummyData/categories';
 
 const FilterCourses = () => {
     const dispatch = useDispatch();
 
     const {user, token} = useSelector(state => state.user)
+    const {categories} = useSelector(state => state.category)
 
     const [filterBy, setFilterBy] = useState("None")
     const [category, setCategory] = useState("all");

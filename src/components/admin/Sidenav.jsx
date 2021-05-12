@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { setSelectedComponent } from '../../actions/adminActions'
+import { setSelectedComponent } from '../../actions/layoutActions'
 import {logOut} from '../../actions/userActions'
 import {setCategoryToEdit} from '../../actions/categoryActions'
 

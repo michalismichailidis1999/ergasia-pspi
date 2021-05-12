@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {createCourse, updateCourse} from '../../actions/courseActions'
+import { setSelectedComponent } from '../../actions/layoutActions';
+import {createCourse, deleteCourse, setCurrentCourse, updateCourse} from '../../actions/courseActions'
 
 const CourseForm = () => {
     const dispatch = useDispatch();
@@ -43,6 +44,9 @@ const CourseForm = () => {
     }
 
     useEffect(() => {
+        setTitle(currentCourse ? currentCourse.title : "");
+        setDescription(currentCourse ? currentCourse.description : "")
+        setCategoryId(currentCourse ? categories.find(category => category.id === currentCourse.category_id).id : categories[0].id)
         setPhotoURL(currentCourse ? currentCourse.photoURL : "")
     }, [currentCourse])
 
@@ -103,7 +107,26 @@ const CourseForm = () => {
                 </div>
             }
 
-            <button className="btn btn-primary">{currentCourse ? "Update Course" : "Create Course"}</button>
+            <button type="submit" className="btn btn-primary">{currentCourse ? "Update Course" : "Create Course"}</button>
+
+            {
+                currentCourse &&
+                <button 
+                    type="button" 
+                    className="btn btn-danger mx-3"
+                    onClick={async () => {
+                        let confirm = window.confirm("Are you sure that you want to delete this course?");
+
+                        if(confirm){
+                            await dispatch(deleteCourse(user.id, token, currentCourse.id))
+                            dispatch(setSelectedComponent("courses"))
+                            dispatch(setCurrentCourse(null))
+                        }
+                    }}
+                >
+                    Delete Course
+                </button>
+            }
         </form>
     )
 }

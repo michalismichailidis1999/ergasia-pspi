@@ -5,7 +5,7 @@ import SearchCourse from './SearchCourse'
 import Courses from './Courses'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsInAdminArea } from '../../actions/adminActions'
-import { getCourses, getEnrolledCourses } from '../../actions/courseActions'
+import { getCompletedCourses, getCourses, getEnrolledCourses, getMyRatings, setCurrentCourse } from '../../actions/courseActions'
 import { fetchCategories } from '../../actions/categoryActions'
 
 const Dashboard = () => {
@@ -15,9 +15,12 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(setIsInAdminArea(false));
+        dispatch(setCurrentCourse(null))
         dispatch(fetchCategories(user.id, token))
         dispatch(getEnrolledCourses(user.id, token))
         dispatch(getCourses(user.id, token, "None", "all"))
+        dispatch(getCompletedCourses(user.id, token))
+        dispatch(getMyRatings(user.id, token));
     }, [])
 
     return (

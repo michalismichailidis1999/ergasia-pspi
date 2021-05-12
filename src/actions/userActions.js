@@ -2,6 +2,7 @@ import {
     CHANGE_EMAIL, 
     CHANGE_FIRSTNAME, 
     CHANGE_LASTNAME, 
+    CHANGE_PHOTO, 
     LOAD_USER, 
     LOGIN, 
     LOG_OUT, 
@@ -37,7 +38,7 @@ export const register = (firstName, lastName, email, password) => {
     }
 }
 
-export const login = (email, password) => {
+export const login = (email, password, adminLogin=false) => {
     return async (dispatch) => {
         try {
             dispatch(loading())
@@ -45,7 +46,13 @@ export const login = (email, password) => {
             const config = getAxiosConfig(true);
             const body = getAxiosBody({email, password});
 
-            const res = await axios.post(`${API}/login`, body, config);
+            let res;
+
+            if(adminLogin){
+                res = await axios.post(`${API}/login/admin`, body, config);
+            }else{
+                res = await axios.post(`${API}/login`, body, config);
+            }
 
             dispatch({type: LOGIN, payload: res.data});
 
@@ -53,8 +60,7 @@ export const login = (email, password) => {
 
             toast.success("You have logged in successfully!")
         } catch (err) {
-            console.log(err.response.data)
-            toast.error("Email or password is incorrect!");  
+            toast.error(err.response.data.error);  
         }finally{
             dispatch(loadingCompleted())
         }
@@ -175,6 +181,25 @@ export const changePassword = (userId, token, password, newPassword) => {
             toast.error(err.response.data.error);
         }finally{
             dispatch(loadingCompleted())
+        }
+    }
+}
+
+export const changePhoto = (userId, token, formData, photoURL) => {
+    return async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            await axios.put(`${API}/user/photo/${userId}`, formData, config);
+
+            dispatch({type: CHANGE_PHOTO, payload: {photoURL}})
+        } catch (err) {
+            toast.error("Profile photo couldn't be updated");
         }
     }
 }

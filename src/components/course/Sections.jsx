@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSection } from '../../actions/courseActions';
 import Section from './Section'
 
 const Sections = () => {
-    const {user} = useSelector(state => state.user);
-    const {currentCourseInfo} = useSelector(state => state.course);
+    const dispatch = useDispatch()
+
+    const {user, token} = useSelector(state => state.user);
+    const {currentCourseInfo, currentCourse} = useSelector(state => state.course);
 
     const [addSection, setAddSection] = useState(false);
     const [sectionTitle, setSectionTitle] = useState("")
 
     const handleSubmit = e => {
         e.preventDefault()
+
+        dispatch(createSection(user.id, token, currentCourse.id, sectionTitle));
 
         setAddSection(false);
     }

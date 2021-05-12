@@ -1,8 +1,12 @@
 import React from 'react'
 import {Pie, Line} from 'react-chartjs-2'
-import { pieChart, lineChart } from '../../dummyData/chart'
+import { useSelector } from 'react-redux'
 
 const Layout = () => {
+    const {pieChart, lineChart, users} = useSelector(state => state.admin)
+    const {categories} = useSelector(state => state.category)
+    const {courses} = useSelector(state => state.course)
+
     return (
         <>
             <h1>Dashboard <i className="fas fa-tachometer-alt"></i></h1>
@@ -13,7 +17,7 @@ const Layout = () => {
                         <i className="fas fa-users"></i>
                     </div>
 
-                    <span>Total Users: 500</span>
+                    <span>Total Users: {users.length}</span>
                 </div>
 
                 <div className="box">
@@ -21,7 +25,7 @@ const Layout = () => {
                         <i className="fas fa-chalkboard"></i>
                     </div>
 
-                    <span>Total Courses: 6000</span>
+                    <span>Total Courses: {courses.length}</span>
                 </div>
 
                 <div className="box">
@@ -29,19 +33,22 @@ const Layout = () => {
                         <i className="fas fa-clipboard-list"></i>
                     </div>
 
-                    <span>Total Categories: 20</span>
+                    <span>Total Categories: {categories.length}</span>
                 </div>
             </div>
 
-            <div className="charts">
-                <div className="chart">
-                    <Pie data={pieChart.data} options={pieChart.options}/>
-                </div>
+            {
+                lineChart && pieChart &&
+                <div className="charts">
+                    <div className="chart">
+                        <Pie data={pieChart.data} options={pieChart.options}/>
+                    </div>
 
-                <div className="chart">
-                    <Line data={lineChart.data} options={lineChart.options}/>
+                    <div className="chart">
+                        <Line data={lineChart.data} options={lineChart.options}/>
+                    </div>
                 </div>
-            </div>
+            }
         </>
     )
 }

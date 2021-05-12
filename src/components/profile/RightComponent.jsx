@@ -8,7 +8,7 @@ import CourseForm from './CourseForm';
 import TeacherCourses from './TeacherCourses';
 
 const RightComponent = () => {
-    const {selectedComponent} = useSelector(state => state.admin); 
+    const {selectedComponent} = useSelector(state => state.layout); 
     const {user} = useSelector(state => state.user);
     
     return (

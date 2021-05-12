@@ -19,7 +19,7 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        dispatch(login(email, password));
+        dispatch(login(email, password, true));
     }
 
     useEffect(() => {

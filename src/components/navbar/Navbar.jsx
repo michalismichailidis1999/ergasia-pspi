@@ -5,7 +5,7 @@ import "./style.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedLinks, links } from './links';
 import { logOut } from '../../actions/userActions';
-import { setSelectedComponent } from '../../actions/profileActions';
+import { setSelectedComponent } from '../../actions/layoutActions';
 import { setCurrentCourse } from '../../actions/courseActions';
 
 const Navbar = () => {
@@ -51,14 +51,17 @@ const Navbar = () => {
                                         </span>
 
                                         <ul className={showDropmenu ? "dropdown-menu show" : "dropdown-menu"}>
-                                            <li>
-                                                <Link to="/profile" className="dropdown-item" onClick={() => {
-                                                    dispatch(setSelectedComponent("courses"));
-                                                    setShowDropmenu(false)
-                                                }}>
-                                                    My Courses <i className="fas fa-book"></i>
-                                                </Link>
-                                            </li>
+                                            {
+                                                user.role !== "admin" &&
+                                                <li>
+                                                    <Link to="/profile" className="dropdown-item" onClick={() => {
+                                                        dispatch(setSelectedComponent("courses"));
+                                                        setShowDropmenu(false)
+                                                    }}>
+                                                        My Courses <i className="fas fa-book"></i>
+                                                    </Link>
+                                                </li>
+                                            }
 
                                             {
                                                 user.role === "teacher" &&

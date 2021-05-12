@@ -1,35 +1,29 @@
-import { EDIT_CATEGORY, CREATE_CATEGORY, DELETE_CATEGORY, SET_CATEGORY_TO_EDIT, FETCH_CATEGORIES } from '../actionTypes/categoryActionTypes';
-import categories from '../dummyData/categories'
+import { 
+    EDIT_CATEGORY, 
+    CREATE_CATEGORY, 
+    DELETE_CATEGORY, 
+    SET_CATEGORY_TO_EDIT, 
+    FETCH_CATEGORIES 
+} from '../actionTypes/categoryActionTypes';
 
 const initialState = {
     categories: [],
     categoryToEdit: null,
-    tableData: categories.map(category => {
-        return {
-            id: category.id,
-            title: category.title,
-            edit: "edit"
-        }
-    })
 }
 
 const categoryReducer = (state=initialState, {type, payload}) => {
     let categories = state.categories
-    let tableData = state.tableData
 
     switch(type){
         case CREATE_CATEGORY:
-            categories.push(payload);
-            tableData.push({...payload, edit: "edit"})
-            return {...state, categories, tableData}
+            categories = [...categories, payload.category]
+            return {...state, categories}
         case EDIT_CATEGORY:
-            categories = categories.map(category => category.id === payload.id ? payload : category)
-            tableData = tableData.map(category => category.id === payload.id ? {...payload, edit: "edit"} : category)
-            return {...state, categories, tableData}
+            categories = categories.map(category => category.id === payload.category.id ? payload.category : category)
+            return {...state, categories}
         case DELETE_CATEGORY:
-            categories = categories.filter(category => category.id !== payload)
-            tableData = tableData.filter(category => category.id !== payload)
-            return {...state, categories, tableData}
+            categories = categories.filter(category => category.id !== payload.categoryId)
+            return {...state, categories}
         case SET_CATEGORY_TO_EDIT:
             return {...state, categoryToEdit: payload}
         case FETCH_CATEGORIES:

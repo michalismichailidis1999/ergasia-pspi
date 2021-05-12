@@ -3,10 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTableHeadersAndData } from '../../actions/adminActions';
 import { createCategory, deleteCategory, editCategory, setCategoryToEdit } from '../../actions/categoryActions';
 import Table from './Table'
+import {userTableHeaders, categoryTableHeaders, courseTableHeaders} from './data/table'
 
 const Selected = ({title, icon}) => {
     const dispatch = useDispatch()
+
+    const {user, token} = useSelector(state => state.user);
     const {categoryToEdit, categories} = useSelector(state => state.category);
+    const {users} = useSelector(state => state.admin);
+    const {selectedComponent} = useSelector(state => state.layout)
+    const {courses} = useSelector(state => state.course);
 
     const [addCategory, setAddCategory] = useState(false);
     const [category, setCategory] = useState(!categoryToEdit ? "" : categoryToEdit.title);
@@ -15,14 +21,48 @@ const Selected = ({title, icon}) => {
         e.preventDefault();
 
         if(!categoryToEdit){
-            dispatch(createCategory({id: categories[categories.length - 1].id + 1, title: category}))
+            dispatch(createCategory(user.id, token, category))
             setAddCategory(false);
         }else{
-            dispatch(editCategory({id: categoryToEdit.id, title: category}))
-            dispatch(setTableHeadersAndData("categories"))
+            dispatch(editCategory(user.id, token, categoryToEdit.id, category))
             dispatch(setCategoryToEdit(null));
         }
     }
+
+    useEffect(() => {
+        let table = {
+            headers: [],
+            data: []
+        }
+
+        if(selectedComponent === "users"){
+            table.headers = userTableHeaders;
+            table.data = users;
+        }else if(selectedComponent === "categories"){
+            table.headers = categoryTableHeaders;
+            table.data = categories.map(category => {
+                let c = {...category};
+
+                c.edit = "edit";
+
+                return c
+            })
+        }else if(selectedComponent === "courses"){
+            table.headers = courseTableHeaders;
+            let courseTableData = courses.map(course => {
+                return {
+                    id: course.id,
+                    title: course.title,
+                    category: categories.find(category => category.id === course.category_id).title,
+                    enrolls: course.enrolls,
+                    rating: course.rating
+                }
+            })
+            table.data = courseTableData
+        }
+
+        dispatch(setTableHeadersAndData(JSON.stringify(table)))
+    }, [categories])
 
     useEffect(() => {
         if(categoryToEdit){
@@ -79,8 +119,7 @@ const Selected = ({title, icon}) => {
                                             let confirm = window.confirm("Do you really want to delete this category?");
 
                                             if(confirm){
-                                                dispatch(deleteCategory(categoryToEdit.id))
-                                                dispatch(setTableHeadersAndData("categories"))
+                                                dispatch(deleteCategory(user.id, token, categoryToEdit.id))
                                             }
 
                                             dispatch(setCategoryToEdit(null))

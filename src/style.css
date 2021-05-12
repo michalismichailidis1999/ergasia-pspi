@@ -104,6 +104,11 @@ ul{
     background: var(--red-color-lighter);
 }
 
+.course .badge{
+    font-size: .9rem;
+    font-weight: 300;
+}
+
 @media(max-width: 991px){
     .courses{
         grid-template-columns: repeat(2, 1fr);

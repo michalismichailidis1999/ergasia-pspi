@@ -1,4 +1,3 @@
-import courses from '../dummyData/courses'
 import {
     CREATE_COURSE, 
     ENROLL_TO_COURSE, 
@@ -9,24 +8,33 @@ import {
     GET_COURSES,
     SET_CURRENT_COURSE,
     FETCH_CURRENT_COURSE_INFO,
-    SET_CURRENT_LESSON
+    SET_CURRENT_LESSON,
+    CHANGE_LESSON_STATUS,
+    COMPLETE_COUSRE, 
+    REMOVE_COMPLETED_COUSRE,
+    CREATE_LESSON,
+    CREATE_SECTION,
+    DELETE_LESSON,
+    DELETE_SECTION,
+    SET_CAN_UPDATE_LESSON_VALUES,
+    GET_COMPLETED_COURSES,
+    DELETE_COURSE,
+    GET_MY_RATINGS,
+    RATE_COURSE,
+    UPDATE_MY_RATING,
+    SET_CAN_RATE_COURSE
 } from '../actionTypes/courseActionTypes'
 
 const initialState = {
     courses: [],
     enrolledCourses: [],
-    tableData: courses.map(course => {
-        return {
-            id: course.id,
-            title: course.title,
-            category: course.category,
-            enrolls: course.enrolls,
-            rating: course.rating
-        }
-    }),
     currentCourse: null,
     currentCourseInfo: null,
-    currentLesson: null
+    currentLesson: null,
+    canUpdateLessonStatus: true,
+    completedCourses: [],
+    myRatings: [],
+    canRateCourse: true
 }
 
 const courseReducer = (state=initialState, action) => {
@@ -34,6 +42,10 @@ const courseReducer = (state=initialState, action) => {
 
     const enrolledCourses = state.enrolledCourses
     let courses = state.courses;
+    let currentCourseInfo = {...state.currentCourseInfo}
+    let completedCourses = state.completedCourses;
+    let myRatings = state.myRatings;
+    let currentCourse = state.currentCourse ? {...state.currentCourse} : null
 
     switch(type){
         case ENROLL_TO_COURSE:
@@ -60,6 +72,85 @@ const courseReducer = (state=initialState, action) => {
             return {...state, currentCourseInfo: payload.currentCourseInfo}
         case SET_CURRENT_LESSON:
             return {...state, currentLesson: payload}
+        case SET_CAN_UPDATE_LESSON_VALUES:
+            return {...state, canUpdateLessonStatus: payload.canUpdateLessonStatus}
+        case CHANGE_LESSON_STATUS:
+            currentCourseInfo.sections = currentCourseInfo.sections.map(section => {
+                section.lessons = section.lessons.map(lesson => {
+                    if(lesson.id === payload.lessonId){
+                        lesson.completed = payload.status
+                    }
+
+                    return lesson;
+                })
+
+                return section;
+            })
+            return {...state, currentCourseInfo}
+        case GET_COMPLETED_COURSES:
+            return {...state, completedCourses: payload.completedCourses}
+        case COMPLETE_COUSRE:
+            completedCourses.push({course_id: payload.courseId})
+            return {...state, completedCourses}
+        case REMOVE_COMPLETED_COUSRE:
+            completedCourses = completedCourses.filter(completed => completed.course_id !== payload.courseId);
+            return {...state, completedCourses}
+        case CREATE_SECTION:
+            currentCourseInfo.sections.push({...payload.section, lessons: []})
+            return {...state}
+        case CREATE_LESSON:
+            currentCourseInfo.sections = currentCourseInfo.sections.map(section => {
+                if(section.id === payload.sectionId){
+                    section.lessons.push(payload.lesson);
+                }
+
+                return section;
+            })
+
+            return {...state, currentCourseInfo}
+        case DELETE_SECTION:
+            currentCourseInfo.sections = currentCourseInfo.sections.filter(section => section.id !== payload.sectionId)
+            return {...state, currentCourseInfo}
+        case DELETE_LESSON:
+            currentCourseInfo.sections = currentCourseInfo.sections.map(section => {
+                if(section.id === payload.sectionId){
+                    section.lessons = section.lessons.filter(lesson => lesson.id !== payload.lessonId);
+                }
+
+                return section;
+            })
+
+            return  {...state, currentCourseInfo}
+        case DELETE_COURSE:
+            courses = courses.filter(course => course.id !== payload.courseId);
+            
+            return {...state, courses}
+        case GET_MY_RATINGS:
+            return {...state, myRatings: payload.myRatings}
+        case RATE_COURSE:
+            myRatings.push({course_id: payload.rating.course_id, rating: payload.rating.rating});
+
+            if(currentCourse){
+                currentCourse.rating = payload.rating.course_rating
+            }
+
+            return {...state, myRatings, currentCourse}
+        case UPDATE_MY_RATING:
+            myRatings = myRatings.map(rating => {
+                if(rating.course_id === payload.courseId){
+                    rating.rating = payload.rating;
+                }
+
+                return rating;
+            })
+
+            if(currentCourse){
+                currentCourse.rating = payload.courseRating
+            }
+
+            return {...state, myRatings, currentCourse}
+        case SET_CAN_RATE_COURSE:
+            return {...state, setCanRateCourse: payload.setCanRateCourse}
         default:
             return state;
     }

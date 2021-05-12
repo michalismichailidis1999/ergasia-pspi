@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedComponent } from '../../actions/adminActions';
+import { Link } from 'react-router-dom';
+import { setSelectedComponent } from '../../actions/layoutActions';
 import { getTeacherCourses, setCurrentCourse } from '../../actions/courseActions';
 
 const TeacherCourses = () => {
@@ -26,7 +27,9 @@ const TeacherCourses = () => {
                 {courses.map(course => (
                     <tr key={course.id}>
                         <td>{course.id}</td>
-                        <td>{course.title}</td>
+                        <td>
+                            <Link to={`/course/${course.id}`}>{course.title}</Link>
+                        </td>
                         <td>
                             <i className="fas fa-edit" onClick={() => {
                                 dispatch(setSelectedComponent("course-form"));

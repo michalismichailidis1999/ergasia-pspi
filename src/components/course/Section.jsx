@@ -1,42 +1,40 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { deleteSection } from '../../actions/courseActions';
 import CreateLesson from './CreateLesson';
-import {setCurrentLesson} from '../../actions/courseActions'
+import LessonLink from './LessonLink';
 
 const Section = ({section}) => {
     const dispatch = useDispatch();
 
-    const {user} = useSelector(state => state.user);
+    const {user, token} = useSelector(state => state.user);
 
     const [addLesson, setAddLesson] = useState(false);
-
     const handleDelete = () => {
-        let confirm = window.confirm("Are you sure that you want to delete this lesson?");
-
+        let confirm = window.confirm("Are you sure do you want to delete the section " + section.title + "?")
+        
         if(confirm){
+            dispatch(deleteSection(user.id, token, section.id))
             toast.success("Section deleted successfully");
         }
     }
 
     return (
         <div className="course-section">
-            <h3>{section.title}</h3>
+            <div className="section-title">
+                <h3>{section.title}</h3>
+
+                {
+                    user.role === "teacher" && 
+                    <i className="fas fa-trash" onClick={() => handleDelete()}></i>
+                }
+            </div>
 
             <ul>
                 {
                     section.lessons.map(lesson => (
-                        <li key={lesson.id}>
-                            <Link to={`/lesson/${lesson.id}`} onClick={() => dispatch(setCurrentLesson(lesson))}>{lesson.title}</Link>
-                            {user.role === "student" && <input type="checkbox" className="form-check-input"/>}
-                            {
-                                user.role === "teacher" &&
-                                <span onClick={() => handleDelete()}>
-                                    <i className="fas fa-trash"></i>
-                                </span>
-                            }
-                        </li>
+                        <LessonLink key={lesson.id} lesson={lesson} />
                     ))
                 }
                 
@@ -48,7 +46,7 @@ const Section = ({section}) => {
                 }
             </ul>
 
-            {addLesson && <CreateLesson setAddLesson={setAddLesson} />}
+            {addLesson && <CreateLesson setAddLesson={setAddLesson} sectionId={section.id} />}
         </div>
     )
 }

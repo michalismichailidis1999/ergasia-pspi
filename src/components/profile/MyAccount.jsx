@@ -1,7 +1,7 @@
 import React, { useState} from 'react'
 import "./style.css"
 import { useDispatch, useSelector } from 'react-redux';
-import {changeFirstName, changeLastName, changeEmail, changePassword} from '../../actions/userActions'
+import {changeFirstName, changeLastName, changeEmail, changePassword, changePhoto} from '../../actions/userActions'
 
 const MyAccount = () => {
     const dispatch = useDispatch();    
@@ -13,10 +13,13 @@ const MyAccount = () => {
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
     const [email, setEmail] = useState(user.email);
+    const [photoURL, setPhotoURL] = useState(user.photoURL)
+    const [file, setFile] = useState(null);
 
     const [editFirstName, setEditFirstName] = useState(false);
     const [editLastName, setEditLastName] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
+    const [editPhoto, setEditPhoto] = useState(false);
 
     const [currentEditedValue, setCurrentEditedValue] = useState(null);
 
@@ -31,9 +34,52 @@ const MyAccount = () => {
         setNewPassword("")
     }
 
+    const handleFileChange = (e) => {
+        setPhotoURL(URL.createObjectURL(e.target.files[0]))
+        setFile(e.target.files[0]);
+    }
+
+    const updateUserPhoto = () => {
+        const formData = new FormData();
+        formData.set("file", file);
+
+        dispatch(changePhoto(user.id, token, formData, photoURL));
+
+        setEditPhoto(false);
+    }
+
     return (
         <React.Fragment>
             <ul className="infos">
+                <li className="border-bottom mb-2 pb-2">
+                    <div className="d-flex align-items-center mb-3">
+                        <img src={photoURL} alt="User Default" />
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={() => {
+                                if(editPhoto){
+                                    updateUserPhoto();
+                                }else{
+                                    setEditPhoto(true)
+                                }
+                            }}
+                        >
+                            {editPhoto ? "Update Photo" : "Change Photo"}
+                        </button>
+                    </div>
+
+                    {
+                        editPhoto &&
+                        <div className="d-flex flex-column justify-content-center">
+                            <input type="file" onChange={handleFileChange} className="form-control mb-2" />
+                            <button className="btn btn-secondary" style={{width: "fit-content"}} onClick={() => {
+                                setFile(null)
+                                setEditPhoto(false);
+                                setPhotoURL(user.photoURL);
+                            }}>Cancel</button>
+                        </div>
+                    }
+                </li>
                 <li className="border-bottom mb-2 pb-2">
                     <label>First Name:</label>
                     {

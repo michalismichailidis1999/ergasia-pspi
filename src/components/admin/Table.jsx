@@ -1,17 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUserRole, setTableHeadersAndData } from '../../actions/adminActions'
+import { changeUserRole } from '../../actions/adminActions'
 import {setCategoryToEdit} from '../../actions/categoryActions'
 
 const Table = () => {
     const dispatch = useDispatch()
 
+    const {user, token} = useSelector(state => state.user);
     const {table} = useSelector(state => state.admin);
 
     const handleChange = (e, id) => {
-        dispatch(changeUserRole(id, e.target.value));
-        dispatch(setTableHeadersAndData("users"))
-    } 
+        dispatch(changeUserRole(user.id, token, id, e.target.value))
+    }
 
     return (
         <table className="table table-striped">

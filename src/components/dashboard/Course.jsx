@@ -6,14 +6,20 @@ import {enrollToCourse, setCurrentCourse, unenrollFromCourse} from '../../action
 
 const Course = ({course}) => {
     const dispatch = useDispatch();
-    const {enrolledCourses} = useSelector(state => state.course)
+    const {enrolledCourses, completedCourses} = useSelector(state => state.course)
     const {user, token} = useSelector(state => state.user)
+
+    const [isCompleted, setIsCompleted] = useState(false)
 
     const [isEnrolled, setIsEnrolled] = useState(enrolledCourses.find(c => c.id === course.id));
 
     useEffect(() => {
-        setIsEnrolled(enrolledCourses.find(c => c.id === course.id))
+        setIsEnrolled(enrolledCourses.find(c => c.id === course.id) ? true : false)
     }, [enrolledCourses])
+
+    useEffect(() => {
+        setIsCompleted(completedCourses.find(completed => completed.course_id === course.id) ? true : false)
+    }, [completedCourses])
 
     return (
         <div className={!isEnrolled ? "course" : "course enrolled"}>
@@ -22,6 +28,8 @@ const Course = ({course}) => {
             </Link>
 
             <div className="course-body">
+                {isCompleted && <span className="badge rounded-pill bg-success mb-2">Completed</span>}
+
                 <p>{course.description}</p>
 
                 <button
@@ -40,7 +48,7 @@ const Course = ({course}) => {
                         setIsEnrolled(!isEnrolled);
                     }}
                 >
-                    {!isEnrolled ? "Enroll" : "Already Enrolled"}
+                    {!isEnrolled ? "Enroll" : "Enrolled"}
                 </button>
             </div>
         </div>

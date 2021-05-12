@@ -9,7 +9,7 @@ CREATE TABLE users(
     last_name VARCHAR(50),
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
-    photoURL VARCHAR(255) DEFAULT '/assets/images/user.png',
+    photoURL VARCHAR(255) DEFAULT '/assets/userImages/user.png',
     role ENUM('teacher', 'student', 'admin') DEFAULT 'student'
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE categories(
 
 CREATE TABLE courses(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
+    title VARCHAR(255) UNIQUE,
     photoURL VARCHAR(255),
     description VARCHAR(3000),
     enrolls INT DEFAULT 0,
@@ -55,6 +55,7 @@ CREATE TABLE enrollments(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT,
     course_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     KEY studentID(student_id),
     CONSTRAINT studentID FOREIGN KEY(student_id) REFERENCES users(id) ON DELETE CASCADE,
     KEY enrolledCourseID(course_id),
@@ -71,6 +72,17 @@ CREATE TABLE completed_courses(
     CONSTRAINT completedCourseID FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
 );
 
+CREATE TABLE course_ratings(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    rating TINYINT,
+    student_id INT,
+    course_id INT,
+    KEY studentID3(student_id),
+    CONSTRAINT studentID3 FOREIGN KEY(student_id) REFERENCES users(id) ON DELETE CASCADE,
+    KEY ratedCourseID(course_id),
+    CONSTRAINT ratedCourseID FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
+);
+
 -- TO INSERT USERS USE POSTMAN OR THE WEBSITE TO HAVE ENCRYPTED PASSWORDS
 -- USERS I CREATED (john@gmail.com, jane@gmail.com, testadmin@gmail.com)
 
@@ -84,29 +96,29 @@ INSERT INTO categories(title) VALUE('Foreign Languages');
 
 -- COURSE INSERTIONS
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Linear Algebra', '/assets/images/linear-algebra.png', 'Complete course for Linear Algebra. Learn everything from basics to advanced.', 2, 2);
+VALUES('Linear Algebra', '/assets/courseImages/linear-algebra.png', 'Complete course for Linear Algebra. Learn everything from basics to advanced.', 2, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('CSS', '/assets/images/css-course.jpg', 'Learn CSS in just 2 hours.', 1, 2);
+VALUES('CSS', '/assets/courseImages/css-course.jpg', 'Learn CSS in just 2 hours.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('AWS', '/assets/images/aws-course.jpg', 'Complete course for AWS. Learn everything from basics to advanced.', 1, 2);
+VALUES('AWS', '/assets/courseImages/aws-course.jpg', 'Complete course for AWS. Learn everything from basics to advanced.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Excel', '/assets/images/excel-course.png', 'Complete course for Excel from A-Z.', 1, 2);
+VALUES('Excel', '/assets/courseImages/excel-course.png', 'Complete course for Excel from A-Z.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('React', '/assets/images/react-course.jpg', 'Learn how to create your own websites using React Js.', 1, 2);
+VALUES('React', '/assets/courseImages/react-course.jpg', 'Learn how to create your own websites using React Js.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Data Science', '/assets/images/datascience-course.png', 'Learn the basics for Data Science. This course will provide you the essentials needed to become a data analyst.', 1, 2);
+VALUES('Data Science', '/assets/courseImages/datascience-course.png', 'Learn the basics for Data Science. This course will provide you the essentials needed to become a data analyst.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('HTML', '/assets/images/html-course.jpg', 'Learn HTML in just 2 hours.', 1, 2);
+VALUES('HTML', '/assets/courseImages/html-course.jpg', 'Learn HTML in just 2 hours.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Responsive Websites', '/assets/images/responsive-design-course.png', 'Learn how to make responsive websites using CSS.', 1, 2);
+VALUES('Responsive Websites', '/assets/courseImages/responsive-design-course.png', 'Learn how to make responsive websites using CSS.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Python', '/assets/images/python-course.jpg', 'Learn the basics for python in 4 hours.', 1, 2);
+VALUES('Python', '/assets/courseImages/python-course.jpg', 'Learn the basics for python in 4 hours.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Fullstack application with React & Express', '/assets/images/fullstack-app-course.png', 'Create a social media application using React Js & Express js.', 1, 2);
+VALUES('Fullstack application with React & Express', '/assets/courseImages/fullstack-app-course.png', 'Create a social media application using React Js & Express js.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Javascript', '/assets/images/js-course.jpg', 'Learn the basics for javascript in 3 hours.', 1, 2);
+VALUES('Javascript', '/assets/courseImages/js-course.jpg', 'Learn the basics for javascript in 3 hours.', 1, 2);
 INSERT INTO courses(title, photoURL, description, category_id, teacher_id) 
-VALUES('Tensorflow', '/assets/images/tensorflow-course.jpg', 'Learn tensorflow in just 7 hours.', 1, 2);
+VALUES('Tensorflow', '/assets/courseImages/tensorflow-course.jpg', 'Learn tensorflow in just 7 hours.', 1, 2);
 
 -- SECTION INSERTIONS
 INSERT INTO sections(title, course_id) VALUES('Section 1', 1);
@@ -122,16 +134,13 @@ INSERT INTO lessons(title, pdfURL, section_id) VALUES('Introduction to Linear Al
 INSERT INTO lessons(title, pdfURL, section_id) VALUES('Introduction to Linear Algebra 6', '/assets/pdfs/linear-algebra-course.pdf', 2);
 
 -- ENROLLMENT INSERTIONS
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 4);
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 2);
-INSERT INTO enrollments(student_id, course_id) VALUES(3, 3);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 26);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 27);
+INSERT INTO enrollments(student_id, course_id) VALUES(3, 28);
 
 -- UPDATE SOME ROLES
 UPDATE users SET role='teacher' WHERE email='john@gmail.com';
 UPDATE users SET role='admin' WHERE email='testadmin@gmail.com';
-
--- UPDATE SOME COURSE RATINGS
-UPDATE courses SET rating=4 WHERE id=1;
 
 -- SELECT QUERIES
 SELECT * FROM users;
@@ -141,7 +150,24 @@ SELECT * FROM sections;
 SELECT * FROM lessons;
 SELECT * FROM enrollments;
 SELECT * FROM completed_courses;
+SELECT * FROM course_ratings;
 
 SELECT * FROM courses WHERE id NOT IN (SELECT c.id FROM courses AS c INNER JOIN enrollments AS e ON c.id=e.course_id WHERE e.student_id=3);
 
 SELECT * FROM courses WHERE id NOT IN (SELECT c.id FROM courses AS c INNER JOIN enrollments AS e ON c.id=e.course_id WHERE e.student_id=3) AND category_id=1;
+
+SELECT YEAR(created_at) as year, MONTH(created_at) AS month, COUNT(id) AS total_enrollments FROM enrollments
+WHERE YEAR(created_at)=YEAR(NOW())
+GROUP BY YEAR(created_at), MONTH(created_at) ORDER BY YEAR(created_at), MONTH(created_at);
+
+SELECT cat.id AS category_id, COUNT(e.id) AS total_enrollments FROM enrollments AS e
+INNER JOIN courses AS c ON e.course_id=c.id INNER JOIN categories AS cat ON c.category_id=cat.id
+GROUP BY cat.id;
+
+
+
+
+
+
+
+

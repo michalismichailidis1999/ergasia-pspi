@@ -20,7 +20,7 @@ export const pieChart = {
         labels: categories,
         datasets: [
             {
-                data: [25467, 58983, 12003, 6789, 4000, 80125],
+                data: [], // insert numbers here
                 label: "Categories",
                 backgroundColor: [
                 "rgba(185, 66, 245, 1)",
@@ -43,7 +43,7 @@ export const lineChart = {
         labels: months,
         datasets: [
             {
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                data: [], // insert numbers here
                 backgroundColor: "rgba(255, 0, 0, .3)",
                 pointBackgroundColor: "rgba(66, 135, 245, 1)",
                 label: "",
@@ -57,22 +57,22 @@ export const lineChart = {
             display: false
         },
         scales: {
-        yAxes: [
-            {
-                scaleLabel: {
-                    display: true,
-                    labelString: "Enrollments"
+            yAxes: [
+                {
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Enrollments"
+                    }
                 }
-            }
-        ],
-        xAxes: [
-            {
-                scaleLabel: {
-                    display: true,
-                    labelString: "Months"
+            ],
+            xAxes: [
+                {
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Months"
+                    }
                 }
-            }
-        ]
+            ]
         }
     }
 };

@@ -3,7 +3,7 @@ import "./style.css"
 import { logOut } from '../../actions/userActions';
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedComponent } from '../../actions/profileActions'
+import { setSelectedComponent } from '../../actions/layoutActions'
 import { setCurrentCourse } from '../../actions/courseActions';
 
 const LeftComponent = () => {
@@ -43,13 +43,16 @@ const LeftComponent = () => {
                         </>
                     }
 
-                    <li 
-                        onClick={() => {
-                            dispatch(setSelectedComponent("courses"))
-                        }}
-                    >
-                        <span>My Courses</span> <i className="fas fa-chalkboard-teacher"></i>
-                    </li>
+                    {
+                        (user.role === "student" || user.role === "teacher") && 
+                        <li 
+                            onClick={() => {
+                                dispatch(setSelectedComponent("courses"))
+                            }}
+                        >
+                            <span>My Courses</span> <i className="fas fa-chalkboard-teacher"></i>
+                        </li>
+                    }
 
                     <li  
                         onClick={() => {
